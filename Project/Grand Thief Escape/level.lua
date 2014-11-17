@@ -25,6 +25,7 @@ function level:init()
 	self.controller:attachController(self.controllerType)
 	
 	world:setGravity(0, 0)
+	self:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 	
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 	
@@ -150,4 +151,15 @@ function level:moveControl(x, y)
 	
 	self.control:setPosition(xPos, yPos)
 	self.controller:movePlayer(self.player.maxSpeed * cos, self.player.maxSpeed * sin)
+end
+
+function level:onBeginContact(e)
+	local fixtureA = e.fixtureA
+	local fixtureB = e.fixtureB
+	local bodyA = fixtureA:getBody()
+	local bodyB = fixtureB:getBody()
+	
+	if (bodyA.type == "Nick" and bodyB.type == "Police") or (bodyA.type == "Police" and bodyB.type == "Nick") then
+		print("colide")
+	end
 end
