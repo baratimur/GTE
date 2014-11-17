@@ -32,7 +32,7 @@ end
 function level:onEnterFrame() 
 	world:step(1/60, 8, 3)
 	if self.controllerType == 1 then
-		
+		self.controller:moveByAnalog()
 	elseif self.controllerType == 2 then
 		self.controller:moveByAccelerator()
 	end
@@ -49,22 +49,23 @@ end
 
 --removing event on exiting scene
 function level:onExitBegin()
-  self:removeEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
+	self:removeEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 end
 
 function level:moveControl(x, y)
 	local xPos, yPos = self.controllerBg:getPosition()
 	local delta = math.pow(x - xPos, 2) + math.pow(y - yPos, 2)
+	local sin = (y - yPos) / math.sqrt(math.pow(x - xPos, 2) + math.pow(y - yPos, 2))
+	local cos = (x - xPos) / math.sqrt(math.pow(x - xPos, 2) + math.pow(y - yPos, 2))
 	
 	if delta < self.deltaMaxController then
 		xPos = x
 		yPos = y
 	else
-		local sin = (y - yPos) / math.sqrt(math.pow(x - xPos, 2) + math.pow(y - yPos, 2))
-		local cos = (x - xPos) / math.sqrt(math.pow(x - xPos, 2) + math.pow(y - yPos, 2))
 		xPos = xPos + math.sqrt(self.deltaMaxController) * cos
 		yPos = yPos + math.sqrt(self.deltaMaxController) * sin
 	end
-
+	
 	self.control:setPosition(xPos, yPos)
+	self.controller:movePlayer(self.player.maxSpeed * cos, self.player.maxSpeed * sin)
 end
