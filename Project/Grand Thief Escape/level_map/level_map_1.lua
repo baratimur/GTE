@@ -25,7 +25,19 @@ return {
 			distance = 400
 		}
 	},
-
+	obstacle = {
+		{
+			class = "car",
+			image = "image/car.png"
+			positions = {
+				{ 560, 500, 270 } ,
+				{ 150, 1700, 0 } ,
+				{ 180, 2700, 90 } ,
+				{ 160, 3900, 0 } ,
+				{ 200, 1700, 0 } 
+			} 
+		}
+	},
 	objects = {
 		{
 			class = "cop_pistol",
@@ -64,18 +76,6 @@ return {
 				{ 620, 1800 } ,
 				{ 120, 3000 } 
 			}
-		} ,
-
-		{
-			class = "car",
-			image = "image/car.png"
-			positions = {
-				{ 560, 500, 270 } ,
-				{ 150, 1700, 0 } ,
-				{ 180, 2700, 90 } ,
-				{ 160, 3900, 0 } ,
-				{ 200, 1700, 0 } 
-			} 
 		}
 	}
 }
