@@ -1,10 +1,8 @@
 level = gideros.class(Sprite)
 
 function level:init()
+	self:load(1)
 	self.player = Nick.new()
-	
-	local bg = SeamlessPattern.new("images/level.png", {speedX = 0, speedY = 1.0})
-	self:addChild(bg)
 	self:addChild(self.player)
 	
 	self.controllerBg = Bitmap.new(Texture.new("images/controller_bg.png", true))
@@ -22,10 +20,38 @@ function level:init()
 	self.controller:attachController(self.controllerType)
 	
 	world:setGravity(0, 0)
-	
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 	
 	self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
+end
+
+function level:load(number)
+	-- create map
+	self.map = World.new(require("level_map/level_map_" .. number))
+	self:addChild(self.map)
+	
+	
+	--- create pools
+	-- cop_pistol pool
+	self.pool_copPistol_projectile = ProjectilePool.new("images/fire.png",10,World.speed)
+	self.pistolGun = PistolGun.new(self.pool_copPistol_projectile,5,200)
+	self.pool_copPistol = PolicePool.new(self.map["objects"][1]["image"][1],self.map["objects"][1]["image"][2],10)
+	self.pool_copPistol:make(180,80,World.speed,self.pistolGun)
+	--self.pool_copPistol_projectile:make(20,20,2,270,550)
+	
+	self.carPool = ObstaclePool.new("images/crate.png",5)
+	self.carPool:make(50,45,World.speed)
+	self:addChild(self.carPool)
+	self:addChild(self.pool_copPistol_projectile)
+	self:addChild(self.pool_copPistol)
+	self.map:addEventListener(World.EVENT_SPAWN, 
+		function(event)
+			print(event.Xpos)
+		end
+	)
+	
+	-- create polices
+	
 end
 
 --removing event
@@ -37,7 +63,10 @@ function level:onEnterFrame()
 		self.controller:moveByAccelerator()
 	end
 	self.player:setPosition(self.player.body:getPosition())
-	
+	self.map:update()
+	self.pool_copPistol:update(self.player:getX(),self.player:getY())
+	self.pool_copPistol_projectile:update()
+	self.carPool:update()
 	--[[if not startGame and not pauseGame then
 		updatePhysicsObjects(levelSelf.world, levelSelf)
 		levelSelf.police:onEnterFrame()
