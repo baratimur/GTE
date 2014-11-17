@@ -2,6 +2,10 @@
  <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="3" mouseToTouch="1" iosDevice="0" packageName="com.yourdomain.yourapp" logicalHeight="1280" logicalWidth="720" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="0" architecture="0">
   <imageScales/>
  </properties>
+ <file source="config.lua"/>
+ <folder name="level_map">
+  <file source="level_map/level_map_1.lua"/>
+ </folder>
  <folder name="audio">
   <file source="audio/main.mp3"/>
   <file source="audio/hit.wav"/>
@@ -23,9 +27,8 @@
   <file source="classes/Ace.Slide.lua"/>
  </folder>
  <folder name="images">
-  <file source="images/tap0.png"/>
-  <file source="images/tap2.png"/>
-  <file source="images/tap1.png"/>
+  <file source="images/controller_bg.png"/>
+  <file source="images/controller.png"/>
   <file source="images/robber.png"/>
   <file source="images/level.png"/>
   <file source="images/grenade.png"/>
@@ -37,56 +40,45 @@
   <file source="images/cop_pistol_idle.png"/>
   <file source="images/cop_pistol_fire.png"/>
   <file source="images/bullet.png"/>
-  <file source="images/button_down.png"/>
-  <file source="images/button_up.png"/>
-  <file source="images/cop_pistol_fire.png"/>
-  <file source="images/cop_pistol_idle.png"/>
-  <file source="images/cops_flame_fire.png"/>
-  <file source="images/cops_flame_idle.png"/>
-  <file source="images/cops_grenade_fire.png"/>
-  <file source="images/cops_grenade_idle.png"/>
-  <file source="images/crate.png"/>
-  <file source="images/crate_locked.png"/>
-  <file source="images/fire.png"/>
-  <file source="images/gideros_mobile.png"/>
-  <file source="images/grenade.png"/>
-  <file source="images/help_down.png"/>
-  <file source="images/help_up.png"/>
-  <file source="images/left-down.png"/>
-  <file source="images/left-up.png"/>
-  <file source="images/level.png"/>
-  <file source="images/levelselect_down.png"/>
-  <file source="images/levelselect_up.png"/>
-  <file source="images/menu_down.png"/>
-  <file source="images/menu_up.png"/>
-  <file source="images/musicoff_down.png"/>
-  <file source="images/musicoff_up.png"/>
-  <file source="images/musicon_down.png"/>
-  <file source="images/musicon_up.png"/>
-  <file source="images/next_down.png"/>
-  <file source="images/next_up.png"/>
-  <file source="images/options_down.png"/>
-  <file source="images/options_up.png"/>
-  <file source="images/packselect_down.png"/>
-  <file source="images/packselect_up.png"/>
-  <file source="images/pause_down.png"/>
-  <file source="images/pause_up.png"/>
-  <file source="images/reset_down.png"/>
-  <file source="images/reset_up.png"/>
-  <file source="images/resume_down.png"/>
-  <file source="images/resume_up.png"/>
-  <file source="images/right-down.png"/>
-  <file source="images/right-up.png"/>
-  <file source="images/robber.png"/>
-  <file source="images/soundsoff_down.png"/>
-  <file source="images/soundsoff_up.png"/>
-  <file source="images/soundson_down.png"/>
-  <file source="images/soundson_up.png"/>
-  <file source="images/start_down.png"/>
   <file source="images/start_up.png"/>
- </folder>
- <folder name="level_map">
-  <file source="level_map/level_map_1.lua"/>
+  <file source="images/start_down.png"/>
+  <file source="images/soundson_up.png"/>
+  <file source="images/soundson_down.png"/>
+  <file source="images/soundsoff_up.png"/>
+  <file source="images/soundsoff_down.png"/>
+  <file source="images/right-up.png"/>
+  <file source="images/right-down.png"/>
+  <file source="images/resume_up.png"/>
+  <file source="images/resume_down.png"/>
+  <file source="images/reset_up.png"/>
+  <file source="images/reset_down.png"/>
+  <file source="images/pause_up.png"/>
+  <file source="images/pause_down.png"/>
+  <file source="images/packselect_up.png"/>
+  <file source="images/packselect_down.png"/>
+  <file source="images/options_up.png"/>
+  <file source="images/options_down.png"/>
+  <file source="images/next_up.png"/>
+  <file source="images/next_down.png"/>
+  <file source="images/musicon_up.png"/>
+  <file source="images/musicon_down.png"/>
+  <file source="images/musicoff_up.png"/>
+  <file source="images/musicoff_down.png"/>
+  <file source="images/menu_up.png"/>
+  <file source="images/menu_down.png"/>
+  <file source="images/levelselect_up.png"/>
+  <file source="images/levelselect_down.png"/>
+  <file source="images/left-up.png"/>
+  <file source="images/left-down.png"/>
+  <file source="images/help_up.png"/>
+  <file source="images/help_down.png"/>
+  <file source="images/gideros_mobile.png"/>
+  <file source="images/crate_locked.png"/>
+  <file source="images/crate.png"/>
+  <file source="images/button_up.png"/>
+  <file source="images/button_down.png"/>
+  <file source="images/back_up.png"/>
+  <file source="images/back_down.png"/>
  </folder>
  <folder name="src">
   <file source="src/obstaclePool.lua"/>
@@ -98,7 +90,6 @@
   <file source="src/world.lua"/>
   <file source="src/police.lua"/>
  </folder>
- <file source="config.lua"/>
  <file source="help.lua"/>
  <file source="level.lua"/>
  <file source="level_select.lua"/>
