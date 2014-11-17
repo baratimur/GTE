@@ -23,8 +23,19 @@
   <file source="classes/Ace.Slide.lua"/>
  </folder>
  <folder name="images">
-  <file source="images/back_down.png"/>
-  <file source="images/back_up.png"/>
+  <file source="images/tap0.png"/>
+  <file source="images/tap2.png"/>
+  <file source="images/tap1.png"/>
+  <file source="images/robber.png"/>
+  <file source="images/level.png"/>
+  <file source="images/grenade.png"/>
+  <file source="images/fire.png"/>
+  <file source="images/cops_grenade_idle.png"/>
+  <file source="images/cops_grenade_fire.png"/>
+  <file source="images/cops_flame_idle.png"/>
+  <file source="images/cops_flame_fire.png"/>
+  <file source="images/cop_pistol_idle.png"/>
+  <file source="images/cop_pistol_fire.png"/>
   <file source="images/bullet.png"/>
   <file source="images/button_down.png"/>
   <file source="images/button_up.png"/>
