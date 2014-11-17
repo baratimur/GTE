@@ -1,18 +1,11 @@
---[[
-*************************************************************
- * This script is developed by Arturs Sosins aka ar2rsawseen, http://appcodingeasy.com
- * Feel free to distribute and modify code, but keep reference to its creator
- *
- * Gideros Game Template for developing games. Includes: 
- * Start scene, pack select, level select, settings, score system and much more
- *
- * For more information, examples and online documentation visit: 
- * http://appcodingeasy.com/Gideros-Mobile/Gideros-Mobile-Game-Template
-**************************************************************
-]]--
-
 --we'll probably need box2d
 require "box2d"
+
+world = b2.World.new(0, 10, true)
+
+NICK_MASK = 1
+PROJECTILE_MASK = 2
+POLICE_MASK = 3
 
 --lock orientation that you need
 stage:setOrientation(Stage.PORTRAIT)

@@ -1,27 +1,3 @@
---[[
-SceneManager v1.0.3
-
-changelog:
-----------
-
-v1.0.3 - 19.11.2011
-Fixed incorrect calculation of width/height in landscape modes
-
-v1.0.2 - 17.11.2011
-Change event names
-
-v1.0.1 - 06.11.2011
-Add collectgarbage() to the end of transition
-
-v1.0 - 06.11.2011
-Initial release
-
-
-This code is MIT licensed, see http://www.opensource.org/licenses/mit-license.php
-(C) 2010 - 2011 Gideros Mobile 
-]]
-
-
 SceneManager = gideros.class(Sprite)
 
 local function getContentWidth()

@@ -1,11 +1,3 @@
---[[
-Author of this easing functions for Lua is Josh Tynjala
-https://github.com/joshtynjala/gtween.lua
-Licensed under the MIT license.
-
-Easing functions adapted from Robert Penner's AS3 tweening equations.
-]]
-
 local backS = 1.70158
 easing = {};
 easing.inBack = function(ratio)
