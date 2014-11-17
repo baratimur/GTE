@@ -7,7 +7,7 @@ function Nick:init()
 	self.sprite:setAnchorPoint(0.5, 0.5)
 	self.sprite:setPosition(50, 50)
 	self:rotateSprite(180)
-	self:setPosition((conf.screenWidth - self.sprite:getWidth()) / 2, conf.screenHeight - self.sprite:getHeight() - 50)
+	self:setPosition((conf.screenWidth - self.sprite:getWidth()) / 2, conf.screenHeight - self.sprite:getHeight() - 300)
 	self:addChild(self.sprite)
 	
 	local body = world:createBody{type = b2.DYNAMIC_BODY}
@@ -24,6 +24,15 @@ function Nick:init()
 	fixture:setFilterData({categoryBits = NICK_MASK, maskBits = NICK_MASK + PROJECTILE_MASK + POLICE_MASK, groupIndex = 0})
 	
 	self.body = body
+	self.maxLinearSpeed = 10
+	self.curLinearSpeed = 0
+	self.speedX = 0
+	self.speedY = 0
+end
+
+function Nick:setSpeed(speedX, speedY)
+	self.speedX = speedX
+	self.speedY = speedY
 end
 
 function Nick:move(x, y)
@@ -36,8 +45,8 @@ function Nick:move(x, y)
 		xPos = x
 	end
 	
-	if y >= conf.screenHeight - self.sprite:getHeight() then
-		yPos = conf.screenHeight - self.sprite:getHeight()
+	if y >= conf.screenHeight - self.sprite:getHeight() - 280 then
+		yPos = conf.screenHeight - self.sprite:getHeight() - 280
 	elseif y > 0 then
 		yPos = y
 	end
@@ -45,8 +54,9 @@ function Nick:move(x, y)
 	self.body:setPosition(xPos, yPos)
 end
 
-function Nick:moveBySpeed(speedX, speedY)
-	self.body:setLinearVelocity(speedX, speedY)
+function Nick:moveBySpeed()
+	self.body:setLinearVelocity(self.speedX, self.speedY)
+	self:rotateSprite(math.atan2(self.speedY, self.speedX) * 180 / math.pi - 90)
 end
 
 function Nick:rotateSprite(degree)
