@@ -1,10 +1,9 @@
 level = gideros.class(Sprite)
 
 function level:init()
+	self:load(1)
 	self.player = Nick.new()
-	
-	local bg = SeamlessPattern.new("images/level.png", {speedX = 0, speedY = 1.0})
-	self:addChild(bg)
+
 	self:addChild(self.player)
 	
 	self.bottomBg = Bitmap.new(Texture.new("images/bottom_bg.png", true))

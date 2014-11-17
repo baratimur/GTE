@@ -23,6 +23,7 @@
   <file source="classes/Ace.Slide.lua"/>
  </folder>
  <folder name="images">
+  <file source="images/bottom_bg.png"/>
   <file source="images/cop_grenade_idle.png"/>
   <file source="images/cop_grenade_fire.png"/>
   <file source="images/cop_flame_idle.png"/>
