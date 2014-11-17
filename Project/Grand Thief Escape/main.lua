@@ -15,7 +15,7 @@
 require "box2d"
 
 --lock orientation that you need
-stage:setOrientation(Stage.LANDSCAPE_LEFT)
+stage:setOrientation(Stage.PORTRAIT)
 
 transition = SceneManager.flipWithFade
 
