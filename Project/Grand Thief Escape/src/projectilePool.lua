@@ -25,7 +25,6 @@ function ProjectilePool:make(startX, startY, speed, direction, distance)
 		i=i+1
 	end
 	if i < #self.activeList then
-		print(speed)
 		self.projectiles[i]:setPosition(startX, startY)
 		self.projectiles[i]:setParameter(speed, direction, distance, self.offsetSpeed)
 		self.projectiles[i]:setAlpha(100)
@@ -43,7 +42,6 @@ function ProjectilePool:update()
 			   self.projectiles[i].isExploded ) then -- already exploded
 				self.projectiles[i]:setAlpha(0)
 				self.activeList[i] = false
-				print(i)
 			else
 				self.projectiles[i]:update()				
 				--print(self.projectiles[i]:getX()  .. self.projectiles[i]:getY() )

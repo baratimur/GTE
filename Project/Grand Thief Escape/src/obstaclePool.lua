@@ -18,6 +18,7 @@ function ObstaclePool:init(texture, capacity)
 end
 
 function ObstaclePool:make(startX, direction, speed)
+	--print(speed)
 	i = 1
 	while self.activeList[i] and i <= #self.activeList do
 		i=i+1

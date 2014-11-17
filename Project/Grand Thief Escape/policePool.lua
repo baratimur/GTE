@@ -17,7 +17,11 @@ function PolicePool:init(texture_idle, texture_fire, capacity)
 	end
 end
 
-function PolicePool:make(startX, fireRate, speed, gun)
+function PolicePool:setGun(gun)
+	self.gun = gun
+end
+
+function PolicePool:make(startX, fireRate, speed)
 	i = 1
 	while self.activeList[i] and i <= #self.activeList do
 		i=i+1
@@ -25,7 +29,7 @@ function PolicePool:make(startX, fireRate, speed, gun)
 	if i < #self.activeList then
 		self.polices[i]:setPosition(startX, 0)
 		self.polices[i]:setParameter(fireRate,speed)
-		self.polices[i]:equip(gun)
+		self.polices[i]:equip(self.gun)
 		self.polices[i]:setAlpha(100)
 		self.activeList[i] = true
 	end

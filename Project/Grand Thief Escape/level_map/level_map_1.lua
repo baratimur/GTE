@@ -1,7 +1,7 @@
 return {
 	map = "images/level.png",
 	height = 5000,
-	speed = 2,
+	speed = 3,
 	projectiles = {
 		{
 			class = "pistol",
@@ -20,7 +20,7 @@ return {
 
 		{
 			class = "flame",
-			image = "images/flame.png",
+			image = "images/fire.png",
 			projectilespeed = 5,
 			distance = 400
 		}

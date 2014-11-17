@@ -27,12 +27,48 @@ end
 
 function level:load(number)
 	-- create map
-	self.map = World.new(require("level_map/level_map_" .. number))
+	local mapData = require("level_map/level_map_" .. number)
+	self.map = World.new(mapData)
 	self:addChild(self.map)
 	
-	
 	--- create pools
-	-- cop_pistol pool
+	-- obstacle pool
+	self.obstaclespools = {}
+	local obstacles = mapData["obstacles"]
+	for i = 1, #obstacles do
+		self.obstaclespools[i] = ObstaclePool.new(obstacles[i]["image"],3)
+		self:addChild(self.obstaclespools[i])
+	end
+	
+	-- projectile pool
+	self.projectilespools = {}
+	self.pistols = {}
+	local projectiles = mapData["projectiles"]
+	for i = 1, #projectiles do
+		self.projectilespools[i] = ProjectilePool.new(
+			projectiles[i]["image"],
+			20,
+			World.speed)
+		self:addChild(self.projectilespools[i])
+		self.pistols[i] = PistolGun.new(
+			self.projectilespools[i],
+			projectiles[i]["projectilespeed"],
+			projectiles[i]["distance"])
+	end
+	
+	-- police pool
+	self.policepools = {}
+	local polices = mapData["objects"]
+	for i = 1, #projectiles do
+		self.policepools[i] = PolicePool.new(
+			polices[i]["image"][1],
+			polices[i]["image"][2],
+			8)
+		self.policepools[i]:setGun(self.pistols[polices[i]["weapon"]])
+		self:addChild(self.policepools[i])
+	end
+	
+	--[[
 	self.pool_copPistol_projectile = ProjectilePool.new("images/fire.png",10,World.speed)
 	self.pistolGun = PistolGun.new(self.pool_copPistol_projectile,5,200)
 	self.pool_copPistol = PolicePool.new(self.map["objects"][1]["image"][1],self.map["objects"][1]["image"][2],10)
@@ -44,13 +80,17 @@ function level:load(number)
 	self:addChild(self.carPool)
 	self:addChild(self.pool_copPistol_projectile)
 	self:addChild(self.pool_copPistol)
-	self.map:addEventListener(World.EVENT_SPAWN, 
+	--]]
+	self.map:addEventListener(World.EVENT_SPAWN_OBJECT, 
 		function(event)
-			print(event.Xpos)
+			self.policepools[event.id]:make(event.Xpos,event.firerate,World.speed)
 		end
 	)
-	
-	-- create polices
+	self.map:addEventListener(World.EVENT_SPAWN_OBSTACLE, 
+		function(event)
+			self.obstaclespools[event.id]:make(event.Xpos,event.direction,World.speed)
+		end
+	)
 	
 end
 
@@ -63,17 +103,24 @@ function level:onEnterFrame()
 		self.controller:moveByAccelerator()
 	end
 	self.player:setPosition(self.player.body:getPosition())
+	
+	--- update all objects
 	self.map:update()
-	self.pool_copPistol:update(self.player:getX(),self.player:getY())
-	self.pool_copPistol_projectile:update()
-	self.carPool:update()
-	--[[if not startGame and not pauseGame then
-		updatePhysicsObjects(levelSelf.world, levelSelf)
-		levelSelf.police:onEnterFrame()
-		levelSelf.pistolBullets:onEnterFrame()
-		levelSelf.map:setPosition(levelSelf.map:getX(),levelSelf.map:getY()-1)
-		levelSelf.map:onEnterFrame()
-	end]]
+	
+	-- update all projectiles
+	for i = 1, #self.projectilespools do
+		self.projectilespools[i]:update()
+	end
+	
+	-- update all polices
+	for i = 1, #self.policepools do
+		self.policepools[i]:update(self.player:getX(),self.player:getY())
+	end
+	
+	-- update all obstace
+	for i = 1, #self.obstaclespools do
+		self.obstaclespools[i]:update()
+	end
 end
 
 --removing event on exiting scene
