@@ -38,9 +38,7 @@ function level:onMouseDown( event )
 		end
 		level:startGame()
 	else
-		local x, y = levelSelf.crate:getPosition()
-		--apply some random force
-		levelSelf.crate.body:applyForce(1000*(math.random(1,3)-2), -10000, x+(math.random(1,3)-2), y+(math.random(1,3)-2))
+		levelSelf.police:fire()
 	end
 end
 
@@ -49,11 +47,26 @@ function level:startGame()
 	startGame = false
 	--do your game logic and stuff
 	--let's simply drop crate
-	levelSelf.crate = displayImage.new("images/crate.png", levelSelf)
-	levelSelf.crate:setPosition(200, 10)
-	physicsAddBody(levelSelf.world, levelSelf.crate, {type = "dynamic", density = 1.0, friction = 0.1, bounce = 0.2})
-	levelSelf.crate.body.type = "crate";
-	levelSelf:addChild(levelSelf.crate)
+	levelSelf.police = Police.new("asset/dummypolice.png")
+	local map = require("level_map/level_map_1")
+	print(map["map"])
+	--levelSelf.crate = displayImage.new("images/crate.png", levelSelf)
+	--levelSelf.crate:setPosition(200, 10)
+	--physicsAddBody(levelSelf.world, levelSelf.crate, {type = "dynamic", density = 1.0, friction = 0.1, bounce = 0.2})
+	--levelSelf.crate.body.type = "crate";
+	--levelSelf:addChild(levelSelf.crate)
+	levelSelf.map = World.new(map)
+	levelSelf.police:setPosition(60,40)
+	levelSelf.pistolBullets = ProjectilePool.new("asset/dummyprojectile.png",5)
+	levelSelf.pistolGun = PistolGun.new(levelSelf.pistolBullets)
+	levelSelf.police:equip(levelSelf.pistolGun)
+	levelSelf.target = Bitmap.new(Texture.new("asset/dummyprojectile.png"))
+	levelSelf.target:setPosition(250,250)
+	levelSelf.police:turnTo(levelSelf.target:getPosition())
+	levelSelf:addChild(levelSelf.map)
+	levelSelf:addChild(levelSelf.target)
+	levelSelf:addChild(levelSelf.pistolBullets)
+	levelSelf:addChild(levelSelf.police)
 	
 	--collision handler
 	local function onBeginContact(event)
@@ -355,6 +368,10 @@ end
 function level:onEnterFrame() 
 	if not startGame and not pauseGame then
 		updatePhysicsObjects(levelSelf.world, levelSelf)
+		levelSelf.police:onEnterFrame()
+		levelSelf.pistolBullets:onEnterFrame()
+		levelSelf.map:setPosition(levelSelf.map:getX(),levelSelf.map:getY()-1)
+		levelSelf.map:onEnterFrame()
 	end
 end
 

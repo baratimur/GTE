@@ -1,8 +1,15 @@
 <project>
- <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="3" mouseToTouch="1" iosDevice="0" packageName="com.yourdomain.yourapp" logicalHeight="480" logicalWidth="320" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="3" architecture="0">
+ <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="3" mouseToTouch="1" iosDevice="0" packageName="com.yourdomain.yourapp" logicalHeight="480" logicalWidth="320" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="0" architecture="0">
   <imageScales/>
  </properties>
- <folder name="asset"/>
+ <folder name="level_map">
+  <file source="level_map_1.lua"/>
+ </folder>
+ <folder name="asset">
+  <file source="asset/dummymap.png"/>
+  <file source="asset/dummyprojectile.png"/>
+  <file source="asset/dummypolice.png"/>
+ </folder>
  <folder name="audio">
   <file source="audio/main.mp3"/>
   <file source="audio/hit.wav"/>
@@ -61,7 +68,11 @@
   <file source="images/back_down.png"/>
  </folder>
  <folder name="src">
+  <file source="src/projectilePool.lua"/>
+  <file source="src/pistolGun.lua"/>
+  <file source="src/projectile.lua"/>
   <file source="src/world.lua"/>
+  <file source="src/police.lua"/>
  </folder>
  <file source="help.lua"/>
  <file source="level.lua"/>
