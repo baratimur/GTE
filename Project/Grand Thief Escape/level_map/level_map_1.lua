@@ -1,10 +1,10 @@
 return {
-	map = "asset/dummymap.png",
+	map = "images/level.png",
 	timeLimit = 30,
 	height = 250,
 	objects = {
 		{
-			image = "asset/dummypolice.png",
+			image = "images/.png",
 			positions = {
 				{ 10, 20 } ,
 				{ 30, 40 } ,

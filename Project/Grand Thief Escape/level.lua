@@ -2,9 +2,8 @@ level = gideros.class(Sprite)
 
 function level:init()
 	self.player = Nick.new()
-	
-	local bg = SeamlessPattern.new("images/level.png", {speedX = 0, speedY = 1.0})
-	self:addChild(bg)
+	self.world = World.new(require("level_map/level_map_1"))
+	self:addChild(self.world)
 	self:addChild(self.player)
 	
 	self.controllerType = 1

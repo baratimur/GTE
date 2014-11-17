@@ -19,8 +19,8 @@ function World:init(map)
 			position["status"] = false -- render status
 		end
 	end
-	local bitmap = Bitmap.new(Texture.new(map["map"]))
-	self:addChild(bitmap)
+	local bg = SeamlessPattern.new(map["map"], {speedX = 0, speedY = 1.0})
+	self:addChild(bg)
 end
 
 function World:getObjects()

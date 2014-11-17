@@ -24,7 +24,7 @@ if(not sets) then
 	sets.curPack = 1
 	dataSaver.saveValue("sets", sets)
 end
-
+--[[
 --background music
 music = {}
 
@@ -54,7 +54,7 @@ end
 if sets.music then
 	music.channel = music.theme:play(0,1000000)
 end
-
+]]--
 --sounds
 sounds = {}
 
