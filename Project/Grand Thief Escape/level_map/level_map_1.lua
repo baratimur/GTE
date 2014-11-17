@@ -1,18 +1,18 @@
 return {
-	map = "image/level.png",
+	map = "images/level.png",
 	height = 5000,
 	speed = 2,
 	projectiles = {
 		{
 			class = "pistol",
-			image = "image/bullet.png",
+			image = "images/bullet.png",
 			projectilespeed = 20,
 			distance = 1000
 		},
 
 		{
 			class = "grenade",
-			image = "image/grenade.png",
+			image = "images/grenade.png",
 			projectilespeed = 5,
 			distance = 500,
 			exploderadius = 100
@@ -20,29 +20,31 @@ return {
 
 		{
 			class = "flame",
-			image = "image/flame.png",
+			image = "images/flame.png",
 			projectilespeed = 5,
 			distance = 400
 		}
 	},
-	obstacle = {
+	
+	obstacles = {
 		{
 			class = "car",
-			image = "image/car.png"
+			image = "images/car.png",
 			positions = {
 				{ 560, 500, 270 } ,
 				{ 150, 1700, 0 } ,
 				{ 180, 2700, 90 } ,
 				{ 160, 3900, 0 } ,
 				{ 200, 1700, 0 } 
-			} 
+			}
 		}
 	},
+	
 	objects = {
 		{
 			class = "cop_pistol",
 			weapon = 1,
-			image = { "image/cop_pistol_idle.png", "image/cop_pistol_fire.png" },
+			image = { "images/cop_pistol_idle.png", "images/cop_pistol_fire.png" },
 			firerate = 60, 
 			positions = {
 				{ 100, 600 } ,
@@ -59,7 +61,7 @@ return {
 		{
 			class = "cop_grenade",
 			weapon = 2,
-			image = { "image/cop_grenade_idle.png", "image/cop_grenade_fire.png" },
+			image = { "images/cop_grenade_idle.png", "images/cop_grenade_fire.png" },
 			firerate = 120, 
 			positions = {
 				{ 360, 1200 } ,
@@ -70,7 +72,7 @@ return {
 		{
 			class = "cop_flame",
 			weapon = 3,
-			image = { "image/cop_flame_idle.png", "image/cop_flame_fire.png" },
+			image = { "images/cop_flame_idle.png", "images/cop_flame_fire.png" },
 			firerate = 90, 
 			positions = {
 				{ 620, 1800 } ,
