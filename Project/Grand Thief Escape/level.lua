@@ -8,7 +8,7 @@ function level:init()
 	self:addChild(self.player)
 	
 	self.controllerType = 1
-	self.controller = Controller.new(self.player)
+	self.controller = Controller.new(self, self.player)
 	self.controller:attachController(self.controllerType)
 	
 	world:setGravity(0, 0)

@@ -27,6 +27,9 @@
   <file source="classes/Ace.Slide.lua"/>
  </folder>
  <folder name="images">
+  <file source="images/tap0.png"/>
+  <file source="images/tap2.png"/>
+  <file source="images/tap1.png"/>
   <file source="images/robber.png"/>
   <file source="images/level.png"/>
   <file source="images/grenade.png"/>

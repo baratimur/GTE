@@ -6,19 +6,35 @@ local playerCanMove = false
 local touchDeltaX = 0
 local touchDeltaY = 0
 
-function Controller:init(player)
+function Controller:init(caller, player)
+	self.caller = caller
 	self.player = player
 	self.type = 0
 	self.filter = 0.999
 	self.fx = 0
 	self.fy = 0
+	
+	local tap0 = Bitmap.new(Texture.new("images/tap0.png"))
+	local tap1 = Bitmap.new(Texture.new("images/tap1.png"))
+    local tap2 = Bitmap.new(Texture.new("images/tap2.png"))
+	tap0:setAnchorPoint(0.5, 0.5)
+	tap1:setAnchorPoint(0.5, 0.5)
+    tap2:setAnchorPoint(0.5, 0.5)
+	self.tap = MovieClip.new {
+        {1, 5, tap0},
+		{6, 10, tap1},
+        {11, 15, tap2},
+		{16, 20, tap0}
+	}
+	caller:addChild(self.tap)
+	self.tap:stop()
 end
 
 function Controller:attachController(type)
 	if type == 1 then --Touch
 		self.player:addEventListener(Event.TOUCHES_BEGIN, self.onTouchBegin, self)
 		self.player:addEventListener(Event.TOUCHES_MOVE, self.onTouchMove, self)
-		self.player:addEventListener(Event.TOUCHES_END, self.onTouchEnd)
+		self.player:addEventListener(Event.TOUCHES_END, self.onTouchEnd, self)
 	elseif type == 2 then --Accelerometer
 		accelerometer:start()
 	end
@@ -54,7 +70,9 @@ function Controller:onTouchMove(event)
 	end
 end
 
-function Controller:onTouchEnd()
+function Controller:onTouchEnd(event)
+	self.tap:setPosition(event.touch.x, event.touch.y)
+	self.tap:gotoAndPlay(1)
 	playerCanMove = false
 end
 
