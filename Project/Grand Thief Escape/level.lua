@@ -6,30 +6,41 @@ function level:init()
 
 	self:addChild(self.player)
 	
+	self.controllerType = 1
+	self.controller = Controller.new(self)
+	
 	self.bottomBg = Bitmap.new(Texture.new("images/bottom_bg.png", true))
 	self.bottomBg:setPosition(0, conf.screenHeight - self.bottomBg:getHeight())
 	self:addChild(self.bottomBg)
 	
-	self.controllerBg = Bitmap.new(Texture.new("images/controller_bg.png", true))
-	self.controllerBg:setAnchorPoint(0.5, 0.5)
-	self.controllerBg:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
-	self:addChild(self.controllerBg)
+	if self.controllerType == 1 then
+		self.controllerBg = Bitmap.new(Texture.new("images/controller_bg.png", true))
+		self.controllerBg:setAnchorPoint(0.5, 0.5)
+		self.controllerBg:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
+		self:addChild(self.controllerBg)
+		
+		self.control = Bitmap.new(Texture.new("images/controller.png", true))
+		self.control:setAnchorPoint(0.5, 0.5)
+		self.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
+		self:addChild(self.control)
+		
+		self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
+	end
 	
-	self.control = Bitmap.new(Texture.new("images/controller.png", true))
-	self.control:setAnchorPoint(0.5, 0.5)
-	self.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
-	self:addChild(self.control)
-	
-	self.controllerType = 1
-	self.controller = Controller.new(self)
-	self.controller:attachController(self.controllerType)
+	--debug drawing
+	local debugDraw = b2.DebugDraw.new()
+	world:setDebugDraw(debugDraw)
+	self:addChild(debugDraw)
 	
 	world:setGravity(0, 0)
-	self:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
+	world:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 	
+	self.controller:attachController(self.controllerType)
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
-	
-	self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
+end
+
+function level:getControl()
+	return self.control
 end
 
 function level:load(number)
@@ -109,6 +120,8 @@ function level:onEnterFrame()
 	elseif self.controllerType == 2 then
 		self.controller:moveByAccelerator()
 	end
+	local xPos, yPos = self.player.body:getPosition()
+	self.player:checkPosition()
 	self.player:setPosition(self.player.body:getPosition())
 	
 	--- update all objects
@@ -162,4 +175,8 @@ function level:onBeginContact(e)
 	if (bodyA.type == "Nick" and bodyB.type == "Police") or (bodyA.type == "Police" and bodyB.type == "Nick") then
 		print("colide")
 	end
+end
+
+function level:resetControl()
+	self.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
 end

@@ -9,7 +9,9 @@ function Police:init(texture_idle, texture_fire, speed)
 	self.bitmap_idle = Bitmap.new(Texture.new(texture_idle))
 	self.bitmap_fire = Bitmap.new(Texture.new(texture_fire))
 	self.bitmap_idle:setAnchorPoint(0.5,0.5)
+	--self.bitmap_idle:setPosition(self.bitmap_idle:getWidth() / 2, self.bitmap_idle:getHeight() / 2)
 	self.bitmap_fire:setAnchorPoint(0.5,0.5)
+	--self.bitmap_fire:setPosition(self.bitmap_fire:getWidth() / 2, self.bitmap_fire:getHeight() / 2)
 	self.gun = nil
 	self.targetX = 0
 	self.targetY = 0
@@ -17,22 +19,21 @@ function Police:init(texture_idle, texture_fire, speed)
 	self.fireRateCounter = 0
 	self.speed = speed
 	
+	self:addChild(self.bitmap_idle)
+	
 	local body = world:createBody{type = b2.DYNAMIC_BODY}
-	local x, y = self:getPosition()
-	body:setPosition(x,y)
 	body.object = self
 	body.type = "Police"
 	
-	x = x + self.bitmap_idle:getWidth() / 2
-	y = y + self.bitmap_idle:getHeight() / 2
-	local circle = b2.CircleShape.new(x, y, self.bitmap_idle:getWidth() / 2)
+	local circle = b2.CircleShape.new(self.bitmap_idle:getWidth() / 2, self.bitmap_idle:getHeight() / 2,
+		self.bitmap_idle:getWidth() / 2)
 	local fixture = body:createFixture{shape = circle, density = 1.0, 
 	friction = 0.1, restitution = 0.2}
-	fixture:setFilterData({categoryBits = POLICE_MASK, maskBits = NICK_MASK + POLICE_MASK, groupIndex = 0})
+	fixture:setFilterData({categoryBits = POLICE_MASK,
+		maskBits = NICK_MASK + PROJECTILE_MASK + POLICE_MASK,
+		groupIndex = 0})
 	
 	self.body = body
-	
-	self:addChild(self.bitmap_idle)
 end
 
 function Police:setParameter(fireRate, speed)
@@ -69,8 +70,6 @@ function Police:fire()
 end
 
 function Police:update(targetX,targetY)
-	self.body:setPosition(self:getPosition())
-	
 	self:turnTo(self.targetX,self.targetY)
 	self:setY(self:getY() + self.speed)
 	self.fireRateCounter = self.fireRateCounter + 1
@@ -78,4 +77,5 @@ function Police:update(targetX,targetY)
 		self.fireRateCounter = 0
 		self:fire()
 	end
+	self.body:setPosition(self:getPosition())
 end

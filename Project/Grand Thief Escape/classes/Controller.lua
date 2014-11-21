@@ -37,9 +37,10 @@ function Controller:onTouchBegin(event)
 	local x = event.touch.x
 	local y = event.touch.y
 	
-	local xCenter, yCenter = self.caller.control:getPosition()
+	local control = self.caller:getControl()
+	local xCenter, yCenter = control:getPosition()
 	
-	if math.pow(x - xCenter, 2) + math.pow(y - yCenter, 2) <= math.pow(self.caller.control:getWidth() / 2, 2) then
+	if math.pow(x - xCenter, 2) + math.pow(y - yCenter, 2) <= math.pow(control:getWidth() / 2, 2) then
 		controlCanMove = true
 		touchDeltaX = x - xCenter
 		touchDeltaY = y - yCenter
@@ -59,7 +60,7 @@ end
 function Controller:onTouchEnd(event)
 	isDecelerating = true
 	controlCanMove = false
-	self.caller.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.caller.controllerBg:getHeight() / 2 - 15)
+	self.caller:resetControl()
 	self:movePlayer(0, 0)
 end
 
@@ -77,35 +78,12 @@ function Controller:moveByAccelerator()
 end
 
 function Controller:movePlayer(speedX, speedY)
-	local xPos, yPos = self.caller.player.body:getPosition()
+	local curSpeedX, curSpeedY = self.caller.player:getSpeed()
 	
-	if xPos < 0 then
-		self.fx = 0
-		xPos = 0
-	elseif xPos > conf.screenWidth - self.caller.player.sprite:getWidth() then
-		self.fx = 0
-		xPos = conf.screenWidth - self.caller.player.sprite:getWidth()
-	else
-		-- apply IIR filter
-		self.fx = 50 * (speedX * self.filter + self.fx * (1 - self.filter))
-	end
+	-- apply IIR filter
+	curSpeedX = 50 * (speedX * self.filter + curSpeedX * (1 - self.filter))
+	curSpeedY = 100 * (speedY * self.filter + curSpeedY * (1 - self.filter))
 	
-	if yPos < 0 then
-		self.fy = 0
-		yPos = 0
-	elseif yPos > conf.screenHeight - self.caller.player.sprite:getHeight() - 280 then
-		self.fy = 0
-		yPos = conf.screenHeight - self.caller.player.sprite:getHeight() - 280
-	else
-		-- apply IIR filter
-		self.fy = 100 * (speedY * self.filter + self.fy * (1 - self.filter))
-	end
-	
-	if xPos == 0 or yPos == 0 or
-		xPos >= conf.screenWidth - self.caller.player.sprite:getWidth() or
-		yPos >= conf.screenHeight - self.caller.player.sprite:getHeight() - 280 then
-		self.caller.player.body:setPosition(xPos, yPos)
-	end
-	
-	self.caller.player:move(self.fx, self.fy)
+	self.caller.player:setSpeed(curSpeedX, curSpeedY)
+	self.caller.player:move()
 end
