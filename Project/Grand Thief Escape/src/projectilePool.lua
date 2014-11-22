@@ -13,7 +13,7 @@ function ProjectilePool:init(texture, capacity, offsetSpeed)
 	self.offsetSpeed = offsetSpeed
 	for i = 1 , capacity do
 		self.projectiles[i] =  Projectile.new(texture,0,0)
-		self.projectiles[i]:setAlpha(0)
+		self.projectiles[i]:reset()
 		self:addChild(self.projectiles[i])
 		self.activeList[i] = false
 	end
@@ -40,7 +40,7 @@ function ProjectilePool:update()
 			if(self.projectiles[i]:getX() < self.minX or
 			   self.projectiles[i]:getX() > self.maxX or -- hitting side walls
 			   self.projectiles[i].isExploded ) then -- already exploded
-				self.projectiles[i]:setAlpha(0)
+				self.projectiles[i]:reset()
 				self.activeList[i] = false
 			else
 				self.projectiles[i]:update()				

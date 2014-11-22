@@ -19,18 +19,29 @@ function Police:init(texture_idle, texture_fire, speed)
 	self.fireRateCounter = 0
 	self.speed = speed
 	
-	self:addChild(self.bitmap_idle)
+	self.timer = Timer.new(250,1)
+	self.timer:addEventListener(Event.TIMER_COMPLETE, function()
+		self.bitmap_fire:setAlpha(0)
+		self.bitmap_idle:setAlpha(1)
+	end)
 	
 	local body = world:createBody{type = b2.DYNAMIC_BODY}
+	local x, y = self:getPosition()
+	
+	body:setPosition(x,y)
 	body.object = self
 	body.type = "Police"
 	
-	local circle = b2.CircleShape.new(self.bitmap_idle:getWidth() / 2, self.bitmap_idle:getHeight() / 2,
-		self.bitmap_idle:getWidth() / 2)
-	local fixture = body:createFixture{shape = circle, density = 1.0, 
+	local circle = b2.CircleShape.new(x, y, self.bitmap_idle:getWidth() / 2)
+	local fixture = body:createFixture{shape = circle, density = 1.0,
 	friction = 0.0, restitution = 0.2}
 	
 	self.body = body
+	
+	self.bitmap_fire:setAlpha(0)
+	
+	self:addChild(self.bitmap_idle)
+	self:addChild(self.bitmap_fire)	
 end
 
 function Police:setParameter(fireRate, speed)
@@ -60,13 +71,16 @@ function Police:getEquip()
 end
 
 function Police:fire()
+	self.bitmap_fire:setAlpha(1)
+	self.bitmap_idle:setAlpha(0)
 	self.gun:setRotation(self:getRotation() - 90)
 	self.gun:setPosition(self:getPosition())
 	self.gun:fire()
-	self:addChild(self.bitmap_fire)
+	self.timer:start()
 end
 
 function Police:update(targetX,targetY)
+	self.body:setPosition(self:getPosition())
 	self:turnTo(self.targetX,self.targetY)
 	self:setY(self:getY() + self.speed)
 	self.fireRateCounter = self.fireRateCounter + 1
@@ -74,5 +88,10 @@ function Police:update(targetX,targetY)
 		self.fireRateCounter = 0
 		self:fire()
 	end
+end
+
+function Police:reset()
+	self:setAlpha(0)
+	self:setPosition(-100,-100)
 	self.body:setPosition(self:getPosition())
 end
