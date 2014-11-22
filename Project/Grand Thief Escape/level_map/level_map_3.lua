@@ -31,10 +31,12 @@ return {
 			class = "car",
 			image = "images/car.png",
 			positions = {
-				{ 160, 900, 0 } ,
-				{ 560, 2300, 0 } ,
-				{ 560, 2700, 180 } ,
-				{ 240, 3600, 0 } 
+				{ 560, 300, 180 } ,
+				{ 150, 1000, 0 } ,
+				{ 300, 1000, 180 } ,
+				{ 180, 2500, 0 } ,
+				{ 400, 3600, 0 } ,
+				{ 560, 3700, 0 } 
 			}
 		}
 	},
@@ -46,8 +48,13 @@ return {
 			image = { "images/cop_pistol_idle.png", "images/cop_pistol_fire.png" },
 			firerate = 60, 
 			positions = {
-				{ 100, 2200 } ,
-				{ 120, 4700 } 
+				{ 100, 400 } ,
+				{ 240, 1500 } ,
+				{ 230, 2300 } ,
+				{ 600, 3300 } ,
+				{ 580, 3900 } ,
+				{ 300, 4700 } ,
+				{ 420, 4700 } 
 			}
 		} ,
 
@@ -57,9 +64,10 @@ return {
 			image = { "images/cop_grenade_idle.png", "images/cop_grenade_fire.png" },
 			firerate = 120, 
 			positions = {
-				{ 600, 500 } ,
-				{ 560, 1600 } ,
-				{ 620, 3500 } 
+				{ 600, 1000 } ,
+				{ 140, 2900 } ,
+				{ 100, 4200 } ,
+				{ 620, 4400 } 
 			}
 		} ,
 
@@ -69,8 +77,12 @@ return {
 			image = { "images/cop_flame_idle.png", "images/cop_flame_fire.png" },
 			firerate = 90, 
 			positions = {
-				{ 120, 2800 } ,
-				{ 100, 4300 } 
+				{ 80, 1500 } ,
+				{ 620, 1900 } ,
+				{ 610, 2500 } ,
+				{ 100, 3500 } ,
+				{ 250, 4100 } ,
+				{ 100, 4650 } 
 			}
 		}
 	}
