@@ -78,12 +78,12 @@ function Controller:moveByAccelerator()
 end
 
 function Controller:movePlayer(speedX, speedY)
-	local curSpeedX, curSpeedY = self.caller.player:getSpeed()
+	local curSpeedX, curSpeedY = player:getSpeed()
 	
 	-- apply IIR filter
 	curSpeedX = 50 * (speedX * self.filter + curSpeedX * (1 - self.filter))
 	curSpeedY = 100 * (speedY * self.filter + curSpeedY * (1 - self.filter))
 	
-	self.caller.player:setSpeed(curSpeedX, curSpeedY)
-	self.caller.player:move()
+	player:setSpeed(curSpeedX, curSpeedY)
+	player:move()
 end
