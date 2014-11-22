@@ -28,10 +28,7 @@ function Police:init(texture_idle, texture_fire, speed)
 	local circle = b2.CircleShape.new(self.bitmap_idle:getWidth() / 2, self.bitmap_idle:getHeight() / 2,
 		self.bitmap_idle:getWidth() / 2)
 	local fixture = body:createFixture{shape = circle, density = 1.0, 
-	friction = 0.1, restitution = 0.2}
-	fixture:setFilterData({categoryBits = POLICE_MASK,
-		maskBits = NICK_MASK + PROJECTILE_MASK + POLICE_MASK,
-		groupIndex = 0})
+	friction = 0.0, restitution = 0.2}
 	
 	self.body = body
 end

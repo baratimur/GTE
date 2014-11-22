@@ -18,10 +18,7 @@ function Nick:init()
 	local circle = b2.CircleShape.new(self.sprite:getWidth() / 2, self.sprite:getHeight() / 2,
 		self.sprite:getWidth() / 2)
 	local fixture = body:createFixture{shape = circle, density = 1.0, 
-	friction = 0.1, restitution = 0.2}
-	fixture:setFilterData({categoryBits = NICK_MASK,
-		maskBits = NICK_MASK + PROJECTILE_MASK + POLICE_MASK,
-		groupIndex = 0})
+	friction = 0.0, restitution = 0.2}
 	
 	self.body = body
 	self.maxSpeed = 0.2
