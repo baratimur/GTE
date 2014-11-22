@@ -1,5 +1,20 @@
 level = gideros.class(Sprite)
 
+function level:wall(x, y, width, height)
+	local wall = Shape.new()
+	wall:beginPath()
+	wall:moveTo(x,y)
+	wall:lineTo(x + width, y)
+	wall:lineTo(x + width, y + height)
+	wall:lineTo(x, y + height)
+	wall:lineTo(x, y)
+	wall:endPath()
+	wall:setPosition(x,y)
+	physicsAddBody(world, wall, {type = "static", density = 1.0, friction = 0.1, bounce = 0.2})
+	wall.body.type = "wall"
+	return wall
+end
+
 function level:init()
 	self:load(1)
 	self.player = Nick.new()
@@ -33,20 +48,27 @@ function level:init()
 	self:addChild(debugDraw)
 	
 	world:setGravity(0, 0)
-	world:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 	
-	self.controller:attachController(self.controllerType)
+	world:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
-end
-
-function level:getControl()
-	return self.control
+	
+	self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
+	
+--	self:addChild(self:wall(0,0,10,application:getContentHeight()))
+--	self:addChild(self:wall(0,0,application:getContentWidth(),10))
+--	self:addChild(self:wall(application:getContentWidth()-10,0,10,application:getContentHeight()))
+--	self:addChild(self:wall(0,application:getContentHeight()-10,application:getContentWidth(),10))
+	
+	--debug drawing
+	--local debugDraw = b2.DebugDraw.new()
+	--world:setDebugDraw(debugDraw)
+	--self:addChild(debugDraw)
 end
 
 function level:load(number)
 	-- create map
 	local mapData = require("level_map/level_map_" .. number)
-	self.map = World.new(mapData)
+	self.map = Map.new(mapData)
 	self:addChild(self.map)
 	
 	--- create pools
@@ -66,7 +88,7 @@ function level:load(number)
 		self.projectilespools[i] = ProjectilePool.new(
 			projectiles[i]["image"],
 			20,
-			World.speed)
+			Map.speed)
 		self:addChild(self.projectilespools[i])
 		self.pistols[i] = PistolGun.new(
 			self.projectilespools[i],
@@ -86,27 +108,15 @@ function level:load(number)
 		self:addChild(self.policepools[i])
 	end
 	
-	--[[
-	self.pool_copPistol_projectile = ProjectilePool.new("images/fire.png",10,World.speed)
-	self.pistolGun = PistolGun.new(self.pool_copPistol_projectile,5,200)
-	self.pool_copPistol = PolicePool.new(self.map["objects"][1]["image"][1],self.map["objects"][1]["image"][2],10)
-	self.pool_copPistol:make(180,80,World.speed,self.pistolGun)
-	--self.pool_copPistol_projectile:make(20,20,2,270,550)
-	
-	self.carPool = ObstaclePool.new("images/crate.png",5)
-	self.carPool:make(50,45,World.speed)
-	self:addChild(self.carPool)
-	self:addChild(self.pool_copPistol_projectile)
-	self:addChild(self.pool_copPistol)
-	--]]
-	self.map:addEventListener(World.EVENT_SPAWN_OBJECT, 
+	-- add spawn listener
+	self.map:addEventListener(Map.EVENT_SPAWN_OBJECT, 
 		function(event)
-			self.policepools[event.id]:make(event.Xpos,event.firerate,World.speed)
+			self.policepools[event.id]:make(event.Xpos,event.firerate,Map.speed)
 		end
 	)
-	self.map:addEventListener(World.EVENT_SPAWN_OBSTACLE, 
+	self.map:addEventListener(Map.EVENT_SPAWN_OBSTACLE, 
 		function(event)
-			self.obstaclespools[event.id]:make(event.Xpos,event.direction,World.speed)
+			self.obstaclespools[event.id]:make(event.Xpos,event.direction,Map.speed)
 		end
 	)
 	
@@ -137,7 +147,7 @@ function level:onEnterFrame()
 		self.policepools[i]:update(self.player:getX(),self.player:getY())
 	end
 	
-	-- update all obstace
+	-- update all obstacles
 	for i = 1, #self.obstaclespools do
 		self.obstaclespools[i]:update()
 	end
@@ -175,8 +185,15 @@ function level:onBeginContact(e)
 	if (bodyA.type == "Nick" and bodyB.type == "Police") or (bodyA.type == "Police" and bodyB.type == "Nick") then
 		print("colide")
 	end
+	if (bodyA.type == "Nick" and bodyB.type == "Projectile") or (bodyA.type == "Projectile" and bodyB.type == "Nick") then
+		print("getShoot")
+	end
 end
 
 function level:resetControl()
 	self.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
+
+	
+	
+
 end

@@ -11,7 +11,7 @@ function PolicePool:init(texture_idle, texture_fire, capacity)
 	self.maxY = conf.screenHeight + 50 -- texture dimension
 	for i = 1 , capacity do
 		self.polices[i] =  Police.new(texture_idle, texture_fire, 0)
-		self.polices[i]:setAlpha(0)
+		self.polices[i]:reset()
 		self:addChild(self.polices[i])
 		self.activeList[i] = false
 	end
@@ -40,7 +40,7 @@ function PolicePool:update(targetX,targetY)
 	for i = 1 , #self.polices do
 		if(self.activeList[i]) then
 			if(self.polices[i]:getY() > self.maxY) then -- hitting bottom walls
-				self.polices[i]:setAlpha(0)
+				self.polices[i]:reset()
 				self.activeList[i] = false
 			else
 				self.polices[i]:setShootTarget(targetX,targetY)

@@ -88,14 +88,14 @@
   <file source="level_map/level_map_1.lua"/>
  </folder>
  <folder name="src">
-  <file source="src/obstaclePool.lua"/>
+  <file source="src/map.lua"/>
   <file source="src/obstacle.lua"/>
-  <file source="policePool.lua"/>
-  <file source="src/projectilePool.lua"/>
+  <file source="src/obstaclePool.lua"/>
   <file source="src/pistolGun.lua"/>
-  <file source="src/projectile.lua"/>
-  <file source="src/world.lua"/>
   <file source="src/police.lua"/>
+  <file source="policePool.lua"/>
+  <file source="src/projectile.lua"/>
+  <file source="src/projectilePool.lua"/>
  </folder>
  <file source="config.lua"/>
  <file source="help.lua"/>

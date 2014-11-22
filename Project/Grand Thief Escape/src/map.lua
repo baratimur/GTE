@@ -1,22 +1,22 @@
 --[[
-World Class
+Map Class
 @Author : Rere
 ]]
 
-World = gideros.class(Sprite)
+Map = gideros.class(Sprite)
 
 -- static var
-World.EVENT_SPAWN_OBJECT = "spobj"
-World.EVENT_SPAWN_OBSTACLE = "spobs"
-World.EVENT_DESPAWN = "despawn"
+Map.EVENT_SPAWN_OBJECT = "spobj"
+Map.EVENT_SPAWN_OBSTACLE = "spobs"
+Map.EVENT_DESPAWN = "despawn"
 
-function World:init(map)
+function Map:init(map)
 	self.mapData = map
 	self.objects = self.mapData["objects"]
 	self.obstacles = self.mapData["obstacles"]
-	self.yCounter = 0 -- y offset counter
+	self.yCounter = 500 -- y offset counter
 	self.bgSpeed = self.mapData["speed"]
-	World.speed = self.mapData["speed"] -- global var
+	Map.speed = self.mapData["speed"] -- global var
 	for i = 1 , #self.objects do
 		local object = self.objects[i]
 		for j = 1 , #object["positions"] do
@@ -35,11 +35,11 @@ function World:init(map)
 	self:addChild(self.bg)
 end
 
-function World:getObjects()
+function Map:getObjects()
 	return self.mapData["polices"]
 end
 
-function World:update()
+function Map:update()
 	self.yCounter = self.yCounter - self.bgSpeed
 	
 	--check object spawn / despawn within device border
@@ -54,7 +54,7 @@ function World:update()
 			else -- not rendered yet
 				if position[2] + self.yCounter > 0 and position[2] + self.yCounter < conf.screenHeight then
 					position["status"] = true
-					local spawnEvent = Event.new(World.EVENT_SPAWN_OBJECT)
+					local spawnEvent = Event.new(Map.EVENT_SPAWN_OBJECT)
 					spawnEvent.class = object["class"]
 					spawnEvent.firerate = object["firerate"]
 					spawnEvent.id = i
@@ -78,7 +78,7 @@ function World:update()
 			else -- not rendered yet
 				if position[2] + self.yCounter > 0 and position[2] + self.yCounter < conf.screenHeight then
 					position["status"] = true
-					local spawnEvent = Event.new(World.EVENT_SPAWN_OBSTACLE)
+					local spawnEvent = Event.new(Map.EVENT_SPAWN_OBSTACLE)
 					spawnEvent.class = obstacle["class"]
 					spawnEvent.id = i
 					spawnEvent.Xpos = position[1]
