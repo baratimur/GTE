@@ -115,4 +115,4 @@ sceneManager = SceneManager.new({
 stage:addChild(sceneManager)
 
 --start start scene
-sceneManager:changeScene("level", 1, transition, easing.outBack)
+sceneManager:changeScene("start", 1, transition, easing.outBack)

@@ -27,6 +27,7 @@ function level_select:init()
 	startButton:addEventListener("click", 
 		function()
 			--go to pack select scene
+			LEVEL_DIFFICULTY = 1
 			sceneManager:changeScene("level", 1, transition, easing.outBack) 
 		end
 	)
@@ -40,6 +41,7 @@ function level_select:init()
 	optionsButton:addEventListener("click", 
 		function()	
 			--go to pack select scene
+			LEVEL_DIFFICULTY = 2
 			sceneManager:changeScene("level", 1, transition, easing.outBack) 
 		end
 	)
@@ -53,6 +55,7 @@ function level_select:init()
 	helpButton:addEventListener("click", 
 		function()	
 			--go to pack select scene
+			LEVEL_DIFFICULTY = 3
 			sceneManager:changeScene("level", 1, transition, easing.outBack) 
 		end
 	)

@@ -64,6 +64,8 @@
   <file source="images/bottom_bg.png"/>
  </folder>
  <folder name="level_map">
+  <file source="level_map/level_map_3.lua"/>
+  <file source="level_map/level_map_2.lua"/>
   <file source="level_map/level_map_1.lua"/>
  </folder>
  <folder name="src">

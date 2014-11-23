@@ -51,3 +51,11 @@ function PolicePool:update(targetX,targetY)
 	end
 end
 
+function PolicePool:reset()
+	for i = 1 , #self.polices do
+		if(self.activeList[i]) then
+			self.polices[i]:reset()
+			self.activeList[i] = false
+		end		
+	end
+end

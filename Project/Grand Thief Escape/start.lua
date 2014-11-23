@@ -27,7 +27,7 @@ function start:init()
 	startButton:addEventListener("click", 
 		function()
 			--go to pack select scene
-			sceneManager:changeScene("pack_select", 1, transition, easing.outBack) 
+			sceneManager:changeScene("level_select", 1, transition, easing.outBack) 
 		end
 	)
 	

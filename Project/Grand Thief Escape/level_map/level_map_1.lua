@@ -36,6 +36,13 @@ return {
 				{ 560, 2700, 180 } ,
 				{ 240, 3600, 0 } 
 			}
+		},
+		{
+			class = "finish",
+			image = "images/police_line.png",
+			positions = {
+				{ 360, 5000, 0 } 
+			}
 		}
 	},
 	

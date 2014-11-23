@@ -11,7 +11,7 @@ function ObstaclePool:init(texture, capacity)
 	self.maxY = conf.screenHeight + 50 -- texture dimension
 	for i = 1 , capacity do
 		self.obstacles[i] = Obstacle.new(texture)
-		self.obstacles[i]:setAlpha(0)
+		self.obstacles[i]:reset()
 		self:addChild(self.obstacles[i])
 		self.activeList[i] = false
 	end
@@ -46,3 +46,11 @@ function ObstaclePool:update(targetX,targetY)
 	end
 end
 
+function ObstaclePool:reset()
+	for i = 1 , #self.obstacles do
+		if(self.activeList[i]) then
+			self.obstacles[i]:reset()
+			self.activeList[i] = false
+		end		
+	end
+end

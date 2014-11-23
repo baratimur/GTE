@@ -50,3 +50,11 @@ function ProjectilePool:update()
 	end
 end
 
+function ProjectilePool:reset()
+	for i = 1 , #self.projectiles do
+		if(self.activeList[i]) then
+			self.projectiles[i]:reset()
+			self.activeList[i] = false
+		end		
+	end
+end

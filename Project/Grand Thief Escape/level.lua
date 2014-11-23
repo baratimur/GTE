@@ -162,7 +162,7 @@ end
 
 function level:onEnterBegin()
 	print("enterrrrrrrr")
-	self:load(1)
+	self:load(LEVEL_DIFFICULTY)
 	
 	player:reset()
 	
@@ -190,15 +190,33 @@ function level:onEnterBegin()
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 	
 	--debug drawing
-	local debugDraw = b2.DebugDraw.new()
-	world:setDebugDraw(debugDraw)
-	self:addChild(debugDraw)
+	--local debugDraw = b2.DebugDraw.new()
+	--world:setDebugDraw(debugDraw)
+	--self:addChild(debugDraw)
 end
 
 function level:onExitBegin()
 	print("exiiiiiit")
+	self:poolsReset()
 	world:removeEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 	self:removeEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
+end
+
+function level:poolsReset()
+	-- reset all projectiles
+	for i = 1, #self.projectilespools do
+		self.projectilespools[i]:reset()
+	end
+	
+	-- reset all polices
+	for i = 1, #self.policepools do
+		self.policepools[i]:reset()
+	end
+	
+	-- reset all obstacles
+	for i = 1, #self.obstaclespools do
+		self.obstaclespools[i]:reset()
+	end
 end
 
 function level:moveControl(x, y)
@@ -226,10 +244,11 @@ function level:onBeginContact(e)
 	local bodyB = fixtureB:getBody()
 	
 	if (bodyA.type == "Nick" and bodyB.type == "Police") or (bodyA.type == "Police" and bodyB.type == "Nick") then
-		sceneManager:changeScene("help", 7.5, transition, easing.outBack)
-	end
-	if (bodyA.type == "Nick" and bodyB.type == "Projectile") or (bodyA.type == "Projectile" and bodyB.type == "Nick") then
+		sceneManager:changeScene("start", 3, transition, easing.outBack)
+	elseif (bodyA.type == "Nick" and bodyB.type == "Projectile") or (bodyA.type == "Projectile" and bodyB.type == "Nick") then
 		player:setHealth(player:getHealth() - 10 + player:getDefense())
+	elseif (bodyA.type == "Nick" and bodyB.type == "Obstacle.images/police_line.png") or (bodyA.type == "Obstacle.images/police_line.png" and bodyB.type == "Nick") then
+		sceneManager:changeScene("help", 3, transition, easing.outBack)
 	end
 end
 
