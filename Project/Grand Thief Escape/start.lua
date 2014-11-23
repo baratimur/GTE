@@ -14,13 +14,13 @@ start = gideros.class(Sprite)
 
 function start:init()
 	--here we'd probably want to set up a background picture
-	local screen = Bitmap.new(Texture.new("images/gideros_mobile.png"))
+	local screen = Bitmap.new(Texture.new("images/screen_bg.png"))
 	self:addChild(screen)
 	screen:setPosition((application:getContentWidth()-screen:getWidth())/2, (application:getContentHeight()-screen:getHeight())/2)
 
 	--create start button
-	local startButton = Button.new(Bitmap.new(Texture.new("images/start_up.png")), Bitmap.new(Texture.new("images/start_down.png")))
-	startButton:setPosition((application:getContentWidth()-startButton:getWidth())/2, ((application:getContentHeight()-startButton:getHeight())/2)-(startButton:getHeight()+20))
+	local startButton = Button.new(Bitmap.new(Texture.new("images/play_clicked.png")), Bitmap.new(Texture.new("images/play_normal.png")))
+	startButton:setPosition((application:getContentWidth()-startButton:getWidth())/2, ((application:getContentHeight()*3/2-startButton:getHeight())/2)-(startButton:getHeight()+20))
 	self:addChild(startButton)
 
 	--start button on click event
@@ -32,8 +32,8 @@ function start:init()
 	)
 	
 	--create start button
-	local optionsButton = Button.new(Bitmap.new(Texture.new("images/options_up.png")), Bitmap.new(Texture.new("images/options_down.png")))
-	optionsButton:setPosition((application:getContentWidth()-optionsButton:getWidth())/2, ((application:getContentHeight()-optionsButton:getHeight())/2))
+	local optionsButton = Button.new(Bitmap.new(Texture.new("images/options_clicked.png")), Bitmap.new(Texture.new("images/options_normal.png")))
+	optionsButton:setPosition((application:getContentWidth()-optionsButton:getWidth())/2, ((application:getContentHeight()*3/2-optionsButton:getHeight())/2))
 	self:addChild(optionsButton)
 
 	--start button on click event
@@ -45,8 +45,8 @@ function start:init()
 	)
 	
 	--create start button
-	local helpButton = Button.new(Bitmap.new(Texture.new("images/help_up.png")), Bitmap.new(Texture.new("images/help_down.png")))
-	helpButton:setPosition((application:getContentWidth()-helpButton:getWidth())/2, ((application:getContentHeight()-helpButton:getHeight())/2)+(helpButton:getHeight()+20))
+	local helpButton = Button.new(Bitmap.new(Texture.new("images/upgrade_clicked.png")), Bitmap.new(Texture.new("images/upgrade_normal.png")))
+	helpButton:setPosition((application:getContentWidth()-helpButton:getWidth())/2, ((application:getContentHeight()*3/2-helpButton:getHeight())/2)+(helpButton:getHeight()+20))
 	self:addChild(helpButton)
 
 	--start button on click event

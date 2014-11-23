@@ -15,73 +15,67 @@ options = gideros.class(Sprite)
 
 function options:init()
 	--here we'd probably want to set up a background picture
-	local screen = Bitmap.new(Texture.new("images/gideros_mobile.png"))
+	local screen = Bitmap.new(Texture.new("images/screen_bg.png"))
 	self:addChild(screen)
 	screen:setPosition((application:getContentWidth()-screen:getWidth())/2, (application:getContentHeight()-screen:getHeight())/2)
 	
-	--create layer for menu buttons
-	local menu = Shape.new()
-	menu:setFillStyle(Shape.SOLID, 0xffffff, 0.5)   
-	menu:beginPath(Shape.NON_ZERO)
-	menu:moveTo(application:getContentWidth()/5,application:getContentHeight()/16)
-	menu:lineTo((application:getContentWidth()/5)*4, application:getContentHeight()/16)
-	menu:lineTo((application:getContentWidth()/5)*4, application:getContentHeight()-(application:getContentHeight()/16))
-	menu:lineTo(application:getContentWidth()/5, application:getContentHeight()-(application:getContentHeight()/16))
-	menu:lineTo(application:getContentWidth()/5, application:getContentHeight()/16)
-	menu:endPath()
-	self:addChild(menu)
-
-	local musicOnButton = menuButton("images/musicon_up.png","images/musicon_down.png", menu, 1,3)
-	local musicOffButton = menuButton("images/musicoff_up.png","images/musicoff_down.png", menu, 1,3)
+	local musicOnButton = Button.new(Bitmap.new(Texture.new("images/music_clicked.png")), Bitmap.new(Texture.new("images/music_normal.png")))
+	musicOnButton:setPosition((application:getContentWidth()-musicOnButton:getWidth())/2, ((application:getContentHeight()*3/2-musicOnButton:getHeight())/2)-(musicOnButton:getHeight()+20))
+	local musicOffButton = Button.new(Bitmap.new(Texture.new("images/music_normal.png")), Bitmap.new(Texture.new("images/music_clicked.png")))
+	musicOffButton:setPosition((application:getContentWidth()-musicOnButton:getWidth())/2, ((application:getContentHeight()*3/2-musicOnButton:getHeight())/2)-(musicOnButton:getHeight()+20))
+	
 	musicOnButton:addEventListener("click", 
 		function()
-			menu:removeChild(musicOnButton)
+			self:removeChild(musicOnButton)
 			music.off()
-			menu:addChild(musicOffButton)
+			self:addChild(musicOffButton)
 		end
 	)
 
 	musicOffButton:addEventListener("click", 
 		function()
-			menu:removeChild(musicOffButton)
+			self:removeChild(musicOffButton)
 			music.on()
-			menu:addChild(musicOnButton)
+			self:addChild(musicOnButton)
 		end
 	)
 	
 	if sets.music then
-		menu:addChild(musicOnButton)
+		self:addChild(musicOnButton)
 	else
-		menu:addChild(musicOffButton)
+		self:addChild(musicOffButton)
 	end
 	
-	local soundsOnButton = menuButton("images/soundson_up.png","images/soundson_down.png", menu, 2,3)
-	local soundsOffButton = menuButton("images/soundsoff_up.png","images/soundsoff_down.png", menu, 2,3)
+	local soundsOnButton = Button.new(Bitmap.new(Texture.new("images/sound_clicked.png")), Bitmap.new(Texture.new("images/sound_normal.png")))
+	soundsOnButton:setPosition((application:getContentWidth()-soundsOnButton:getWidth())/2, ((application:getContentHeight()*3/2-soundsOnButton:getHeight())/2))
+	local soundsOffButton = Button.new(Bitmap.new(Texture.new("images/sound_normal.png")), Bitmap.new(Texture.new("images/sound_clicked.png")))
+	soundsOffButton:setPosition((application:getContentWidth()-soundsOnButton:getWidth())/2, ((application:getContentHeight()*3/2-soundsOnButton:getHeight())/2))
 	
 	soundsOnButton:addEventListener("click", 
 		function()
-			menu:removeChild(soundsOnButton)
-			menu:addChild(soundsOffButton)
+			self:removeChild(soundsOnButton)
+			self:addChild(soundsOffButton)
 			sounds.off()
 		end
 	)
 	
 	soundsOffButton:addEventListener("click", 
 		function()
-			menu:removeChild(soundsOffButton)
-			menu:addChild(soundsOnButton)
+			self:removeChild(soundsOffButton)
+			self:addChild(soundsOnButton)
 			sounds.on()
 		end
 	)
 	
 	if sets.sounds then
-		menu:addChild(soundsOnButton)
+		self:addChild(soundsOnButton)
 	else
-		menu:addChild(soundsOffButton)
+		self:addChild(soundsOffButton)
 	end
 	
-	local backButton = menuButton("images/back_up.png","images/back_down.png", menu, 3,3)
-	menu:addChild(backButton)
+	local backButton = Button.new(Bitmap.new(Texture.new("images/back_clicked.png")), Bitmap.new(Texture.new("images/back_normal.png")))
+	backButton:setPosition((application:getContentWidth()-backButton:getWidth())/2, ((application:getContentHeight()*3/2-backButton:getHeight())/2)+(backButton:getHeight()+20))
+	self:addChild(backButton)
 	backButton:addEventListener("click", 
 		function()	
 			sceneManager:changeScene("start", 1, transition, easing.outBack) 
