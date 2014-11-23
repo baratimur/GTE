@@ -5,7 +5,7 @@ Police Class
 
 Police = gideros.class(Sprite)
 
-function Police:init(texture_idle, texture_fire, speed)
+function Police:init(texture_idle, texture_fire, speed, sound)
 	self.bitmap_idle = Bitmap.new(Texture.new(texture_idle))
 	self.bitmap_fire = Bitmap.new(Texture.new(texture_fire))
 	self.bitmap_idle:setAnchorPoint(0.5,0.5)
@@ -18,7 +18,7 @@ function Police:init(texture_idle, texture_fire, speed)
 	self.fireRate = 100
 	self.fireRateCounter = 0
 	self.speed = speed
-	
+	self.sound = sound
 	self.timer = Timer.new(250,1)
 	self.timer:addEventListener(Event.TIMER_COMPLETE, function()
 		self.bitmap_fire:setAlpha(0)
@@ -77,6 +77,7 @@ function Police:fire()
 	self.gun:setPosition(self:getPosition())
 	self.gun:fire()
 	self.timer:start()
+	sounds.play(self.sound)
 end
 
 function Police:update(targetX,targetY)

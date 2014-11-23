@@ -5,12 +5,12 @@ PolicePool Class
 
 PolicePool = gideros.class(Sprite)
 
-function PolicePool:init(texture_idle, texture_fire, capacity)
+function PolicePool:init(texture_idle, texture_fire, sound, capacity)
 	self.polices = {}
 	self.activeList = {}
 	self.maxY = conf.screenHeight + 50 -- texture dimension
 	for i = 1 , capacity do
-		self.polices[i] =  Police.new(texture_idle, texture_fire, 0)
+		self.polices[i] =  Police.new(texture_idle, texture_fire, 0, sound)
 		self.polices[i]:reset()
 		self:addChild(self.polices[i])
 		self.activeList[i] = false

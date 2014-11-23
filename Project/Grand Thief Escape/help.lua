@@ -19,50 +19,56 @@ function help:init()
 	self:addChild(screen)
 	screen:setPosition((application:getContentWidth()-screen:getWidth())/2, (application:getContentHeight()-screen:getHeight())/2)
 	
-	local musicOnButton = Button.new(Bitmap.new(Texture.new("images/music_clicked.png")), Bitmap.new(Texture.new("images/music_normal.png")))
-	musicOnButton:setPosition((application:getContentWidth()-musicOnButton:getWidth())/2, ((application:getContentHeight()*3/2-musicOnButton:getHeight())/2)-(musicOnButton:getHeight()+20))
-	local musicOffButton = Button.new(Bitmap.new(Texture.new("images/music_normal.png")), Bitmap.new(Texture.new("images/music_clicked.png")))
-	musicOffButton:setPosition((application:getContentWidth()-musicOnButton:getWidth())/2, ((application:getContentHeight()*3/2-musicOnButton:getHeight())/2)-(musicOnButton:getHeight()+20))
+	local myfont = TTFont.new("asset/pricedown bl.ttf", 80)
+	local text = TextField.new(myfont, "DEF : " .. NICK_DEFENCE)
+	text:setTextColor(0x000000)
+	text:setPosition((application:getContentWidth()-text:getWidth())/3, ((application:getContentHeight()*3/2-text:getHeight())/2)-(text:getHeight()+10))
+	self:addChild(text)
+	myfont = TTFont.new("asset/pricedown bl.ttf", 75)
+	text = TextField.new(myfont, "DEF : " .. NICK_DEFENCE)
+	text:setTextColor(0xffffff)
+	text:setPosition((application:getContentWidth()-text:getWidth())/3, ((application:getContentHeight()*3/2-text:getHeight())/2)-(text:getHeight()+10))	
+	self:addChild(text)
 	
-	musicOnButton:addEventListener("click", 
+	local myfont = TTFont.new("asset/pricedown bl.ttf", 80)
+	local text = TextField.new(myfont, "HP : " .. NICK_MAXHEALTH)
+	text:setTextColor(0x000000)
+	text:setPosition((application:getContentWidth()-text:getWidth())/3, ((application:getContentHeight()*3/2-text:getHeight())/2)+(text:getHeight()+10))
+	self:addChild(text)
+	myfont = TTFont.new("asset/pricedown bl.ttf", 75)
+	text = TextField.new(myfont, "HP : " .. NICK_MAXHEALTH)
+	text:setTextColor(0xffffff)
+	text:setPosition((application:getContentWidth()-text:getWidth())/3, ((application:getContentHeight()*3/2-text:getHeight())/2)+(text:getHeight()+10))	
+	self:addChild(text)
+	
+	local bitmapClicked = Bitmap.new(Texture.new("images/plus_clicked.png"))
+	bitmapClicked:setScale(0.4,0.4)
+	local bitmapNormal = Bitmap.new(Texture.new("images/plus_normal.png"))
+	bitmapNormal:setScale(0.2,0.2)
+	local plusDef = Button.new(bitmapClicked, bitmapNormal )
+	plusDef:setPosition((application:getContentWidth()-text:getWidth())-25, ((application:getContentHeight()*3/2-text:getHeight())/2)-(text:getHeight()-20))
+	self:addChild(plusDef)
+	
+	plusDef:addEventListener("click", 
 		function()
-			self:removeChild(musicOnButton)
-			music.off()
-			self:addChild(musicOffButton)
+				NICK_DEFENCE = NICK_DEFENCE + 1
 		end
 	)
-
-	musicOffButton:addEventListener("click", 
+	
+	
+	local bitmapClicked = Bitmap.new(Texture.new("images/plus_clicked.png"))
+	bitmapClicked:setScale(0.4,0.4)
+	local bitmapNormal = Bitmap.new(Texture.new("images/plus_normal.png"))
+	bitmapNormal:setScale(0.2,0.2)
+	local plusHP = Button.new(bitmapClicked, bitmapNormal)
+	plusHP:setPosition((application:getContentWidth()-text:getWidth()-25), ((application:getContentHeight()*3/2-text:getHeight())/2)-(text:getHeight()+80))
+	self:addChild(plusHP)
+	
+	plusHP:addEventListener("click", 
 		function()
-			self:removeChild(musicOffButton)
-			music.on()
-			self:addChild(musicOnButton)
+			NICK_MAXHEALTH = NICK_MAXHEALTH + 1
 		end
 	)
-	
-	if sets.music then
-		self:addChild(musicOnButton)
-	else
-		self:addChild(musicOffButton)
-	end
-	
-	local soundsOnButton = Button.new(Bitmap.new(Texture.new("images/upgrade_clicked.png")), Bitmap.new(Texture.new("images/upgrade_normal.png")))
-	soundsOnButton:setPosition((application:getContentWidth()-soundsOnButton:getWidth())/2, ((application:getContentHeight()*3/2-soundsOnButton:getHeight())/2))
-	
-	soundsOnButton:addEventListener("click", 
-		function()
-			self:removeChild(soundsOnButton)
-			self:addChild(soundsOffButton)
-			sounds.off()
-		end
-	)
-	
-	
-	if sets.sounds then
-		self:addChild(soundsOnButton)
-	else
-		self:addChild(soundsOffButton)
-	end
 	
 	local backButton = Button.new(Bitmap.new(Texture.new("images/back_clicked.png")), Bitmap.new(Texture.new("images/back_normal.png")))
 	backButton:setPosition((application:getContentWidth()-backButton:getWidth())/2, ((application:getContentHeight()*3/2-backButton:getHeight())/2)+(backButton:getHeight()+20))

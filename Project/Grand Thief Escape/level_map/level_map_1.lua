@@ -51,17 +51,20 @@ return {
 			class = "cop_pistol",
 			weapon = 1,
 			image = { "images/cop_pistol_idle.png", "images/cop_pistol_fire.png" },
-			firerate = 60, 
+			sound = "gunshot",
+			firerate = 60,
 			positions = {
 				{ 100, 2200 } ,
 				{ 120, 4700 } 
 			}
+			
 		} ,
 
 		{
 			class = "cop_grenade",
 			weapon = 2,
 			image = { "images/cop_grenade_idle.png", "images/cop_grenade_fire.png" },
+			sound = "throw",
 			firerate = 120, 
 			positions = {
 				{ 600, 500 } ,
@@ -74,6 +77,7 @@ return {
 			class = "cop_flame",
 			weapon = 3,
 			image = { "images/cop_flame_idle.png", "images/cop_flame_fire.png" },
+			sound = "gunshot",
 			firerate = 90, 
 			positions = {
 				{ 120, 2800 } ,

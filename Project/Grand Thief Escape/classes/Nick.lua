@@ -21,8 +21,8 @@ function Nick:init()
 	friction = 0.0, restitution = 0.2}
 	
 	self.body = body
-	self.health = 100
-	self.defense = 0
+	self.health = NICK_MAXHEALTH
+	self.defense = NICK_DEFENCE
 	self.MAX_SPEED = 0.2
 	self.curSpeedX = 0
 	self.curSpeedY = 0
@@ -56,7 +56,7 @@ function Nick:setSpeed(speedX, speedY)
 end
 
 function Nick:reset()
-	self.health = 100
+	self.health = NICK_MAXHEALTH
 	self.curSpeedX = 0
 	self.curSpeedY = 0
 	self.sprite:setRotation(180)
@@ -65,7 +65,7 @@ function Nick:reset()
 end
 
 function Nick:resetDefense()
-	self.defense = 0
+	self.defense = NICK_DEFENCE
 end
 
 function Nick:move()

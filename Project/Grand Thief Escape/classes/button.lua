@@ -48,6 +48,7 @@ function Button:onMouseUp(event)
 		self.focus = false;
 		self:updateVisualState(false)
 		self:dispatchEvent(Event.new("click"))
+		sounds.play('hit')
 		event:stopPropagation()
 	end
 end

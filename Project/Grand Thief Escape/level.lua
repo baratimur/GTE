@@ -101,7 +101,9 @@ function level:load(number)
 		self.policepools[i] = PolicePool.new(
 			polices[i]["image"][1],
 			polices[i]["image"][2],
-			8)
+			polices[i]["sound"],
+			8
+			)
 		self.policepools[i]:setGun(self.pistols[polices[i]["weapon"]])
 		self:addChild(self.policepools[i])
 	end
@@ -134,7 +136,7 @@ function level:onEnterFrame()
 		sceneManager:changeScene("help", 7.5, transition, easing.outBack)
 	end
 	
-	self.hpBar:setScaleY(player:getHealth() / 100.0)
+	self.hpBar:setScaleY(player:getHealth() / NICK_MAXHEALTH)
 	self.hpBar:setPosition(50,
 		conf.screenHeight - self.bottomBg:getHeight() / 2 - player:getHealth() * 2 + 100)
 	
@@ -246,8 +248,10 @@ function level:onBeginContact(e)
 	if (bodyA.type == "Nick" and bodyB.type == "Police") or (bodyA.type == "Police" and bodyB.type == "Nick") then
 		sceneManager:changeScene("start", 3, transition, easing.outBack)
 	elseif (bodyA.type == "Nick" and bodyB.type == "Projectile") or (bodyA.type == "Projectile" and bodyB.type == "Nick") then
+		sounds.play("grunt")
 		player:setHealth(player:getHealth() - 10 + player:getDefense())
 	elseif (bodyA.type == "Nick" and bodyB.type == "Obstacle.images/police_line.png") or (bodyA.type == "Obstacle.images/police_line.png" and bodyB.type == "Nick") then
+		sounds.play("complete")
 		sceneManager:changeScene("help", 3, transition, easing.outBack)
 	end
 end

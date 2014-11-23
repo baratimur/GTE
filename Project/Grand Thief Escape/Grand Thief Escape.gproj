@@ -2,7 +2,13 @@
  <properties autorotation="0" encryptAssets="0" fps="60" scaleMode="3" mouseToTouch="1" iosDevice="0" packageName="com.yourdomain.yourapp" logicalHeight="1280" logicalWidth="720" mouseTouchOrder="0" encryptCode="0" retinaDisplay="0" touchToMouse="1" assetsOnly="0" orientation="0" architecture="0">
   <imageScales/>
  </properties>
+ <folder name="asset">
+  <file source="asset/pricedown bl.ttf"/>
+ </folder>
  <folder name="audio">
+  <file source="audio/throw.wav"/>
+  <file source="audio/gunshot.wav"/>
+  <file source="audio/grunt.wav"/>
   <file source="audio/main.mp3"/>
   <file source="audio/hit.wav"/>
   <file source="audio/complete.mp3"/>
@@ -23,6 +29,8 @@
   <file source="classes/Ace.Slide.lua"/>
  </folder>
  <folder name="images">
+  <file source="images/plus_normal.png"/>
+  <file source="images/plus_clicked.png"/>
   <file source="images/back_normal.png"/>
   <file source="images/back_clicked.png"/>
   <file source="images/upgrade_normal.png"/>

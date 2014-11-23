@@ -64,6 +64,9 @@ sounds = {}
 --after that you can simply play them as sounds.play("hit")
 sounds.complete = Sound.new("audio/complete.mp3")
 sounds.hit = Sound.new("audio/hit.wav")
+sounds.grunt = Sound.new("audio/grunt.wav")
+sounds.gunshot = Sound.new("audio/gunshot.wav")
+sounds.throw = Sound.new("audio/throw.wav")
 
 --turn sounds on
 sounds.on = function()
