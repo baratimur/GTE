@@ -16,53 +16,51 @@ function level:wall(x, y, width, height)
 end
 
 function level:init()
-	self:load(1)
-	self.player = Nick.new()
-
-	self:addChild(self.player)
-	
-	self.controllerType = 1
 	self.controller = Controller.new(self)
 	
 	self.bottomBg = Bitmap.new(Texture.new("images/bottom_bg.png", true))
 	self.bottomBg:setPosition(0, conf.screenHeight - self.bottomBg:getHeight())
-	self:addChild(self.bottomBg)
 	
-	if self.controllerType == 1 then
-		self.controllerBg = Bitmap.new(Texture.new("images/controller_bg.png", true))
-		self.controllerBg:setAnchorPoint(0.5, 0.5)
-		self.controllerBg:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
-		self:addChild(self.controllerBg)
-		
-		self.control = Bitmap.new(Texture.new("images/controller.png", true))
-		self.control:setAnchorPoint(0.5, 0.5)
-		self.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
-		self:addChild(self.control)
-		
-		self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
-	end
+	self.hpBar = Shape.new()
+	self.hpBar:clear()
+	self.hpBar:beginPath()
+	self.hpBar:setFillStyle(Shape.SOLID, 0xff0000)
+	self.hpBar:setLineStyle(1, 0xff0000)
+	self.hpBar:beginPath()
+	self.hpBar:moveTo(0, 0)
+	self.hpBar:lineTo(100, 0)
+	self.hpBar:lineTo(100, 200)
+	self.hpBar:lineTo(0, 200)
+	self.hpBar:lineTo(0,0)
+	self.hpBar:endPath()
+	self.hpBar:setPosition(50, conf.screenHeight - self.hpBar:getHeight() / 2 - self.bottomBg:getHeight() / 2)
 	
-	--debug drawing
-	local debugDraw = b2.DebugDraw.new()
-	world:setDebugDraw(debugDraw)
-	self:addChild(debugDraw)
+	self.hpBorder = Shape.new()
+	self.hpBorder:clear()
+	self.hpBorder:beginPath()
+	self.hpBorder:setFillStyle(Shape.NONE)
+	self.hpBorder:setLineStyle(5, 0x000000)
+	self.hpBorder:beginPath()
+	self.hpBorder:moveTo(0, 0)
+	self.hpBorder:lineTo(100, 0)
+	self.hpBorder:lineTo(100, 200)
+	self.hpBorder:lineTo(0, 200)
+	self.hpBorder:lineTo(0,0)
+	self.hpBorder:endPath()
+	self.hpBorder:setPosition(50, conf.screenHeight - self.hpBorder:getHeight() / 2 - self.bottomBg:getHeight() / 2)
 	
 	world:setGravity(0, 0)
+	self:addEventListener("enterBegin", self.onEnterBegin, self)
+	self:addEventListener("exitBegin", self.onExitBegin, self)
 	
-	world:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
-	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
-	
-	self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
-	
---	self:addChild(self:wall(0,0,10,application:getContentHeight()))
---	self:addChild(self:wall(0,0,application:getContentWidth(),10))
---	self:addChild(self:wall(application:getContentWidth()-10,0,10,application:getContentHeight()))
---	self:addChild(self:wall(0,application:getContentHeight()-10,application:getContentWidth(),10))
-	
-	--debug drawing
-	--local debugDraw = b2.DebugDraw.new()
-	--world:setDebugDraw(debugDraw)
-	--self:addChild(debugDraw)
+	self:addChild(self:wall(0,0,10,application:getContentHeight()))
+	self:addChild(self:wall(0,0,application:getContentWidth(),10))
+	self:addChild(self:wall(application:getContentWidth()-10,0,10,application:getContentHeight()))
+	self:addChild(self:wall(0,application:getContentHeight()-10,application:getContentWidth(),10))
+end
+
+function level:getControl()
+	return self.control
 end
 
 function level:load(number)
@@ -125,14 +123,23 @@ end
 --removing event
 function level:onEnterFrame() 
 	world:step(1/60, 8, 3)
-	if self.controllerType == 1 then
+	if controllerType == 1 then
 		self.controller:moveByAnalog()
-	elseif self.controllerType == 2 then
+	elseif controllerType == 2 then
 		self.controller:moveByAccelerator()
 	end
-	local xPos, yPos = self.player.body:getPosition()
-	self.player:checkPosition()
-	self.player:setPosition(self.player.body:getPosition())
+	local xPos, yPos = player.body:getPosition()
+	
+	if player:getHealth() == 0 then
+		sceneManager:changeScene("help", 7.5, transition, easing.outBack)
+	end
+	
+	self.hpBar:setScaleY(player:getHealth() / 100.0)
+	self.hpBar:setPosition(50,
+		conf.screenHeight - self.bottomBg:getHeight() / 2 - player:getHealth() * 2 + 100)
+	
+	player:checkPosition()
+	player:setPosition(player.body:getPosition())
 	
 	--- update all objects
 	self.map:update()
@@ -144,7 +151,7 @@ function level:onEnterFrame()
 	
 	-- update all polices
 	for i = 1, #self.policepools do
-		self.policepools[i]:update(self.player:getX(),self.player:getY())
+		self.policepools[i]:update(player:getX(), player:getY())
 	end
 	
 	-- update all obstacles
@@ -153,8 +160,44 @@ function level:onEnterFrame()
 	end
 end
 
---removing event on exiting scene
+function level:onEnterBegin()
+	print("enterrrrrrrr")
+	self:load(1)
+	
+	player:reset()
+	
+	self:addChild(player)
+	self:addChild(self.bottomBg)
+	self:addChild(self.hpBar)
+	self:addChild(self.hpBorder)
+	
+	if controllerType == 1 then
+		self.controllerBg = Bitmap.new(Texture.new("images/controller_bg.png", true))
+		self.controllerBg:setAnchorPoint(0.5, 0.5)
+		self.controllerBg:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
+		self:addChild(self.controllerBg)
+		
+		self.control = Bitmap.new(Texture.new("images/controller.png", true))
+		self.control:setAnchorPoint(0.5, 0.5)
+		self.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
+		self:addChild(self.control)
+		
+		self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
+	end
+	
+	self.controller:attachController(controllerType)
+	world:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
+	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
+	
+	--debug drawing
+	local debugDraw = b2.DebugDraw.new()
+	world:setDebugDraw(debugDraw)
+	self:addChild(debugDraw)
+end
+
 function level:onExitBegin()
+	print("exiiiiiit")
+	world:removeEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 	self:removeEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 end
 
@@ -173,7 +216,7 @@ function level:moveControl(x, y)
 	end
 	
 	self.control:setPosition(xPos, yPos)
-	self.controller:movePlayer(self.player.maxSpeed * cos, self.player.maxSpeed * sin)
+	self.controller:movePlayer(player.MAX_SPEED * cos, player.MAX_SPEED * sin)
 end
 
 function level:onBeginContact(e)
@@ -183,17 +226,13 @@ function level:onBeginContact(e)
 	local bodyB = fixtureB:getBody()
 	
 	if (bodyA.type == "Nick" and bodyB.type == "Police") or (bodyA.type == "Police" and bodyB.type == "Nick") then
-		print("colide")
+		sceneManager:changeScene("help", 7.5, transition, easing.outBack)
 	end
 	if (bodyA.type == "Nick" and bodyB.type == "Projectile") or (bodyA.type == "Projectile" and bodyB.type == "Nick") then
-		print("getShoot")
+		player:setHealth(player:getHealth() - 10 + player:getDefense())
 	end
 end
 
 function level:resetControl()
 	self.control:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
-
-	
-	
-
 end

@@ -33,9 +33,8 @@ function Police:init(texture_idle, texture_fire, speed)
 	body.type = "Police"
 	
 	local circle = b2.CircleShape.new(x, y, self.bitmap_idle:getWidth() / 2)
-	local fixture = body:createFixture{shape = circle, density = 1.0, 
-	friction = 0.1, restitution = 0.2}
-	--fixture:setFilterData({categoryBits = POLICE_MASK, maskBits = NICK_MASK + POLICE_MASK, groupIndex = 0})
+	local fixture = body:createFixture{shape = circle, density = 1.0,
+	friction = 0.0, restitution = 0.2}
 	
 	self.body = body
 	
@@ -81,6 +80,7 @@ function Police:fire()
 end
 
 function Police:update(targetX,targetY)
+	self.body:setPosition(self:getPosition())
 	self:turnTo(self.targetX,self.targetY)
 	self:setY(self:getY() + self.speed)
 	self.fireRateCounter = self.fireRateCounter + 1

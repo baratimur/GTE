@@ -3,9 +3,11 @@ require "box2d"
 
 world = b2.World.new(0, 10, true)
 
-NICK_MASK = 1
-PROJECTILE_MASK = 2
-POLICE_MASK = 3
+--NICK
+player = Nick.new()
+
+--TIPE PENGENDALI
+controllerType = 1
 
 --lock orientation that you need
 stage:setOrientation(Stage.PORTRAIT)
