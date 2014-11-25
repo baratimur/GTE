@@ -26,7 +26,7 @@ function ObstaclePool:make(startX, direction, speed)
 	if i < #self.activeList then
 		self.obstacles[i]:setPosition(startX, -50)
 		self.obstacles[i]:setParameter(direction, speed)
-		self.obstacles[i]:setAlpha(100)
+		--self.obstacles[i]:setAlpha(100)
 		self.activeList[i] = true
 	end
 end
@@ -36,7 +36,7 @@ function ObstaclePool:update(targetX,targetY)
 	for i = 1 , #self.obstacles do
 		if(self.activeList[i]) then
 			if(self.obstacles[i]:getY() > self.maxY) then -- hitting bottom walls
-				self.obstacles[i]:setAlpha(0)
+				self.obstacles[i]:reset()
 				self.activeList[i] = false
 			else
 				self.obstacles[i]:update()

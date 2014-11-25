@@ -27,7 +27,7 @@ function ProjectilePool:make(startX, startY, speed, direction, distance)
 	if i < #self.activeList then
 		self.projectiles[i]:setPosition(startX, startY)
 		self.projectiles[i]:setParameter(speed, direction, distance, self.offsetSpeed)
-		self.projectiles[i]:setAlpha(100)
+		--self.projectiles[i]:setAlpha(100)
 		
 		self.activeList[i] = true
 	end

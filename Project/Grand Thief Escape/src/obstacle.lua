@@ -22,6 +22,7 @@ function Obstacle:init(texture)
 	
 	self.body = body
 	self:addChild(bitmap)
+	self:setPosition(200,200)
 end
 
 function Obstacle:setParameter(direction, speed)
@@ -36,7 +37,7 @@ function Obstacle:update()
 end
 
 function Obstacle:reset()
-	self:setAlpha(0)
+	--self:setAlpha(0)
 	self:setPosition(-200,-200)
 	self.body:setPosition(self:getPosition())
 end

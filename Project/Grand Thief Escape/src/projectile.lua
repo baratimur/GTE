@@ -26,6 +26,7 @@ function Projectile:init(texture, speed, direction)
 	self.body = body
 	
 	self:addChild(bitmap)
+	self:setPosition(150,150)
 end
 
 function Projectile:setParameter(speed, direction, distance, offsetSpeed)
@@ -52,6 +53,6 @@ end
 
 function Projectile:reset()
 	self:setPosition(-150,-150)
-	self:setAlpha(0)
+	--self:setAlpha(0)
 	self.body:setPosition(self:getPosition())
 end

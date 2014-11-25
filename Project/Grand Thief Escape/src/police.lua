@@ -20,9 +20,12 @@ function Police:init(texture_idle, texture_fire, speed, sound)
 	self.speed = speed
 	self.sound = sound
 	self.timer = Timer.new(250,1)
+	
 	self.timer:addEventListener(Event.TIMER_COMPLETE, function()
-		self.bitmap_fire:setAlpha(0)
-		self.bitmap_idle:setAlpha(1)
+		--self.bitmap_fire:setAlpha(0)
+		--self.bitmap_idle:setAlpha(100)
+		self:addChild(self.bitmap_idle)	
+		self:removeChild(self.bitmap_fire)	
 	end)
 	
 	local body = world:createBody{type = b2.DYNAMIC_BODY}
@@ -38,10 +41,10 @@ function Police:init(texture_idle, texture_fire, speed, sound)
 	
 	self.body = body
 	
-	self.bitmap_fire:setAlpha(0)
+	--self.bitmap_fire:setAlpha(0)
 	
 	self:addChild(self.bitmap_idle)
-	self:addChild(self.bitmap_fire)	
+	self:setPosition(100,100)
 end
 
 function Police:setParameter(fireRate, speed)
@@ -71,8 +74,10 @@ function Police:getEquip()
 end
 
 function Police:fire()
-	self.bitmap_fire:setAlpha(1)
-	self.bitmap_idle:setAlpha(0)
+	--self.bitmap_fire:setAlpha(1)
+	--self.bitmap_idle:setAlpha(0)
+	self:removeChild(self.bitmap_idle)	
+	self:addChild(self.bitmap_fire)	
 	self.gun:setRotation(self:getRotation() - 90)
 	self.gun:setPosition(self:getPosition())
 	self.gun:fire()
@@ -92,7 +97,7 @@ function Police:update(targetX,targetY)
 end
 
 function Police:reset()
-	self:setAlpha(0)
+	--self:setAlpha(0)
 	self:setPosition(-100,-100)
 	self.body:setPosition(self:getPosition())
 end

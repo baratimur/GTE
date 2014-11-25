@@ -30,7 +30,7 @@ function PolicePool:make(startX, fireRate, speed)
 		self.polices[i]:setPosition(startX, 0)
 		self.polices[i]:setParameter(fireRate,speed)
 		self.polices[i]:equip(self.gun)
-		self.polices[i]:setAlpha(100)
+		--self.polices[i]:setAlpha(100)
 		self.activeList[i] = true
 	end
 end
