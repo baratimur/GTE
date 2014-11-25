@@ -9,7 +9,7 @@ local isDecelerating = true
 
 function Controller:init(caller)
 	self.caller = caller
-	self.type = 0
+	self.type = CONTROLLER_TYPE
 	self.filter = 0.999
 	self.fx = 0
 	self.fy = 0

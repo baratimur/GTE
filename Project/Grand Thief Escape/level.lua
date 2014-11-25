@@ -125,9 +125,9 @@ end
 --removing event
 function level:onEnterFrame() 
 	world:step(1/60, 8, 3)
-	if controllerType == 1 then
+	if CONTROLLER_TYPE == 1 then
 		self.controller:moveByAnalog()
-	elseif controllerType == 2 then
+	elseif CONTROLLER_TYPE == 2 then
 		self.controller:moveByAccelerator()
 	end
 	local xPos, yPos = player.body:getPosition()
@@ -173,7 +173,7 @@ function level:onEnterBegin()
 	self:addChild(self.hpBar)
 	self:addChild(self.hpBorder)
 	
-	if controllerType == 1 then
+	if CONTROLLER_TYPE == 1 then
 		self.controllerBg = Bitmap.new(Texture.new("images/controller_bg.png", true))
 		self.controllerBg:setAnchorPoint(0.5, 0.5)
 		self.controllerBg:setPosition(conf.screenWidth / 2, conf.screenHeight - self.controllerBg:getHeight() / 2 - 15)
@@ -187,7 +187,7 @@ function level:onEnterBegin()
 		self.deltaMaxController = math.pow(((self.controllerBg:getWidth() - self.control:getWidth())) / 2, 2)
 	end
 	
-	self.controller:attachController(controllerType)
+	self.controller:attachController(CONTROLLER_TYPE)
 	world:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 	
