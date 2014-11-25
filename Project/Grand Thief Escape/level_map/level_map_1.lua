@@ -77,7 +77,7 @@ return {
 			class = "cop_flame",
 			weapon = 3,
 			image = { "images/cop_flame_idle.png", "images/cop_flame_fire.png" },
-			sound = "gunshot",
+			sound = "flame",
 			firerate = 90, 
 			positions = {
 				{ 120, 2800 } ,

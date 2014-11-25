@@ -38,6 +38,13 @@ return {
 				{ 400, 3600, 0 } ,
 				{ 560, 3700, 0 } 
 			}
+		},
+		{
+			class = "finish",
+			image = "images/police_line.png",
+			positions = {
+				{ 360, 5000, 0 } 
+			}
 		}
 	},
 	
@@ -46,6 +53,7 @@ return {
 			class = "cop_pistol",
 			weapon = 1,
 			image = { "images/cop_pistol_idle.png", "images/cop_pistol_fire.png" },
+			sound = "gunshot",
 			firerate = 60, 
 			positions = {
 				{ 100, 400 } ,
@@ -62,6 +70,7 @@ return {
 			class = "cop_grenade",
 			weapon = 2,
 			image = { "images/cop_grenade_idle.png", "images/cop_grenade_fire.png" },
+			sound = "throw",
 			firerate = 120, 
 			positions = {
 				{ 600, 1000 } ,
@@ -75,6 +84,7 @@ return {
 			class = "cop_flame",
 			weapon = 3,
 			image = { "images/cop_flame_idle.png", "images/cop_flame_fire.png" },
+			sound = "flame",
 			firerate = 90, 
 			positions = {
 				{ 80, 1500 } ,
